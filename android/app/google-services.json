@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "158771345260",
+    "project_id": "stock-careers",
+    "storage_bucket": "stock-careers.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158771345260:android:a4e2b984898932219d6549",
+        "android_client_info": {
+          "package_name": "com.example.stock_careers"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4ZNgFeVacLPT-L9Edqz36eLLY2kEARgg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
