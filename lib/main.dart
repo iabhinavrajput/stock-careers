@@ -1,6 +1,9 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:page_transition/page_transition.dart';
 
 
 void main() async {
@@ -37,8 +40,15 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+      home: AnimatedSplashScreen(
+            duration: 1000,
+            // splash:SvgPicture.asset('assets/images/logo/stock_careers_logo.svg'),
+            splash: Image.asset('assets/images/logo/stocks_careers_favicon_black.png'),
+            nextScreen: MyHomePage(title: '',),
+            splashTransition: SplashTransition.scaleTransition,
+            pageTransitionType: PageTransitionType.fade,
+            backgroundColor: Colors.white));
+   
   }
 }
 
