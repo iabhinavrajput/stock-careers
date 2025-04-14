@@ -18,33 +18,38 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Dimensions.init(context); // initialize responsive sizes
+    Dimensions.init(context); // initialize screen dimensions
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                // horizontal: Dimensions.pagePadding,
-                vertical: Dimensions.pagePadding * 1.5,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Log In',
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header Section
+          Padding(
+            padding: EdgeInsets.only(
+              top: Dimensions.pagePadding * 5,
+              left: Dimensions.pagePadding,
             ),
-            Container(
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Log In',
+                  style: TextStyle(
+                    color: AppColors.white,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20),
+              ],
+            ),
+          ),
+
+          // Form Section with Rounded Background
+          Expanded(
+            child: Container(
               height: Dimensions.screenHeight * 0.8,
               width: double.infinity,
               decoration: const BoxDecoration(
@@ -59,100 +64,105 @@ class _LoginScreenState extends State<LoginScreen> {
                   horizontal: Dimensions.pagePadding,
                   vertical: Dimensions.pagePadding,
                 ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 32),
-                    InputField(
-                      label: 'Your Email',
-                      controller: emailController,
-                      hintText: 'example@mail.com',
-                    ),
-                    const SizedBox(height: 20),
-                    InputField(
-                      label: 'Password',
-                      controller: passwordController,
-                      hintText: 'Password',
-                      obscureText: !isPasswordVisible,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: AppColors.hint,
-                        ),
-                        onPressed: () {
-                          setState(() => isPasswordVisible = !isPasswordVisible);
-                        },
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 32),
+                      InputField(
+                        label: 'Your Email',
+                        controller: emailController,
+                        hintText: 'example@mail.com',
                       ),
-                    ),
-                                          const SizedBox(height: 10),
-
-                    Padding(
-                      padding: const EdgeInsets.only(left: 160.0),
-                      child: Text("Forgot Password?",
-                          style: TextStyle(
+                      const SizedBox(height: 20),
+                      InputField(
+                        label: 'Password',
+                        controller: passwordController,
+                        hintText: 'Password',
+                        obscureText: !isPasswordVisible,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
                             color: AppColors.hint,
-                            fontSize: Dimensions.fontMedium,
-                          )),
-                    ),
-                    const SizedBox(height: 18),
-                    SizedBox(
-                      width: Dimensions.screenWidth * 0.85,
-                      height: Dimensions.buttonHeight,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ),
-                        onPressed: () {
-                            Navigator.pushReplacementNamed(context, AppRoutes.home);
-
-                        },
-                        child: const Text(
-                          'Log In',
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 16,
-                          ),
+                          onPressed: () {
+                            setState(() =>
+                                isPasswordVisible = !isPasswordVisible);
+                          },
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Don’t have an account?',
-                          style: TextStyle(
-                            color: AppColors.textGrey,
-                            fontSize: 14,
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                              color: AppColors.hint,
+                              fontSize: Dimensions.fontMedium,
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, AppRoutes.login);
-
+                        ],
+                      ),
+                      const SizedBox(height: 28),
+                      SizedBox(
+                        width: Dimensions.screenWidth * 0.9,
+                        height: Dimensions.buttonHeight,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, AppRoutes.home);
                           },
                           child: const Text(
-                            'Sign up',
+                            'Log In',
                             style: TextStyle(
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
+                              color: AppColors.white,
+                              fontSize: 16,
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                  ],
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Don’t have an account? ',
+                            style: TextStyle(
+                              color: AppColors.textGrey,
+                              fontSize: 14,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, AppRoutes.signUp);
+                            },
+                            child: const Text(
+                              'Sign up',
+                              style: TextStyle(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
