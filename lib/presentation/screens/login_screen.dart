@@ -107,6 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         onPressed: () {
+                            Navigator.pushReplacementNamed(context, AppRoutes.home);
 
                         },
                         child: const Text(
@@ -131,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, AppRoutes.signUp);
+                            Navigator.pushNamed(context, AppRoutes.login);
 
                           },
                           child: const Text(

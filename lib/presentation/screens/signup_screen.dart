@@ -18,41 +18,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Dimensions.init(context); // initialize responsive sizes
+    Dimensions.init(context); // initialize screen dimensions
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: Dimensions.pagePadding,
-                vertical: Dimensions.pagePadding * 1.5,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Enter your details below & free sign up',
-                    style: TextStyle(
-                      color: AppColors.hint,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header Section
+          Padding(
+            padding: EdgeInsets.only(
+              top: Dimensions.pagePadding * 5,
+              left: Dimensions.pagePadding,
             ),
-            Container(
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    color: AppColors.white,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                // SizedBox(height: 1),
+                Text(
+                  'Enter your details below & free sign up',
+                  style: TextStyle(
+                    color: AppColors.hint,
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(height: 20),
+              ],
+            ),
+          ),
+
+          // Form Section with Rounded Background
+          Expanded(
+            child: Container(
               height: Dimensions.screenHeight * 0.8,
               width: double.infinity,
               decoration: const BoxDecoration(
@@ -67,103 +72,107 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   horizontal: Dimensions.pagePadding,
                   vertical: Dimensions.pagePadding,
                 ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 32),
-                    InputField(
-                      label: 'Your Email',
-                      controller: emailController,
-                      hintText: 'example@mail.com',
-                    ),
-                    const SizedBox(height: 20),
-                    InputField(
-                      label: 'Password',
-                      controller: passwordController,
-                      hintText: 'Password',
-                      obscureText: !isPasswordVisible,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: AppColors.hint,
-                        ),
-                        onPressed: () {
-                          setState(() => isPasswordVisible = !isPasswordVisible);
-                        },
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 32),
+                      InputField(
+                        label: 'Your Email',
+                        controller: emailController,
+                        hintText: 'example@mail.com',
                       ),
-                    ),
-                    const SizedBox(height: 28),
-                    SizedBox(
-                      width: Dimensions.screenWidth * 0.85,
-                      height: Dimensions.buttonHeight,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      const SizedBox(height: 20),
+                      InputField(
+                        label: 'Password',
+                        controller: passwordController,
+                        hintText: 'Password',
+                        obscureText: !isPasswordVisible,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: AppColors.hint,
                           ),
-                        ),
-                        onPressed: () {
-                          // Handle Sign Up logic
-                        },
-                        child: const Text(
-                          'Create account',
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 16,
-                          ),
+                          onPressed: () {
+                            setState(() =>
+                                isPasswordVisible = !isPasswordVisible);
+                          },
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Checkbox(value: false, onChanged: (_) {}),
-                        const Expanded(
-                          child: Text(
-                            'By creating an account you have to agree with our term & condition.',
+                      const SizedBox(height: 28),
+                      SizedBox(
+                        width: Dimensions.screenWidth * 0.9,
+                        height: Dimensions.buttonHeight,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onPressed: () {
+                            // Handle Sign Up logic
+                          },
+                          child: const Text(
+                            'Create account',
                             style: TextStyle(
-                              color: AppColors.textGrey,
-                              fontSize: 12,
+                              color: AppColors.white,
+                              fontSize: 16,
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Already have an account? ',
-                          style: TextStyle(
-                            color: AppColors.textGrey,
-                            fontSize: 14,
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Checkbox(value: false, onChanged: (_) {}),
+                          const Expanded(
+                            child: Text(
+                              'By creating an account you have to agree with our term & condition.',
+                              style: TextStyle(
+                                color: AppColors.textGrey,
+                                fontSize: 12,
+                              ),
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, AppRoutes.login);
-                          },
-                          child: const Text(
-                            'Log in',
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Already have an account? ',
                             style: TextStyle(
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.bold,
+                              color: AppColors.textGrey,
                               fontSize: 14,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                  ],
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, AppRoutes.login);
+                            },
+                            child: const Text(
+                              'Log in',
+                              style: TextStyle(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

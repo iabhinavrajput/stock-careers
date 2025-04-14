@@ -22,8 +22,8 @@ class InputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: Dimensions.pagePadding,
-        vertical: Dimensions.pagePadding * 0.03,
+        horizontal: Dimensions.pagePadding * 0.04,
+        vertical: Dimensions.pagePadding * 0.04,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
