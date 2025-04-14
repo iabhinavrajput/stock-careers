@@ -1,5 +1,6 @@
 // lib/routes/app_routes.dart
 import 'package:flutter/material.dart';
+import 'package:stock_careers/presentation/screens/course_screen.dart';
 import 'package:stock_careers/presentation/screens/home_screen.dart';
 import 'package:stock_careers/presentation/screens/login_screen.dart';
 import 'package:stock_careers/presentation/screens/signup_screen.dart';
@@ -8,6 +9,7 @@ class AppRoutes {
   static const String signUp = '/signup';
   static const String login = '/login';
   static const String home = '/home';
+  static const String course = '/course';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -17,6 +19,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case course:
+        return MaterialPageRoute(builder: (_) => const CourseScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(

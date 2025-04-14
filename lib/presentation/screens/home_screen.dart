@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'course_screen.dart'; // Import your CourseScreen here
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,6 +17,15 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _currentIndex = index;
     });
+
+    // Navigate to different screens based on the index
+    if (index == 1) { // If the Courses tab is tapped
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CourseScreen()), // Navigate to the CourseScreen
+      );
+    }
+    // You can handle other navigation logic for the Home and Profile tabs similarly
   }
 
   List<IconData> icons = [
@@ -27,6 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
     'Home',
     'Courses',
     'Profile',
+  ];
+
+  // Image URLs for the slider
+  List<String> imgList = [
+    'https://foundr.com/wp-content/uploads/2021/09/Best-online-course-platforms.png',
+    'https://foundr.com/wp-content/uploads/2023/04/How-to-create-an-online-course.jpg.webp',
+    'https://blogassets.leverageedu.com/blog/wp-content/uploads/2020/05/23151218/BA-Courses.png',
   ];
 
   @override
@@ -73,23 +91,69 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       backgroundColor: AppColors.background,
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                "Courses",
+        child: Column(
+          children: [
+            // Image Slider
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: const Text(
+                "Featured Courses",
                 style: TextStyle(
                   color: AppColors.white,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20),
-              // Add your course cards here
-            ],
-          ),
+            ),
+            CarouselSlider(
+              options: CarouselOptions(
+                height: 200,
+                autoPlay: true,
+                enlargeCenterPage: true,
+                aspectRatio: 16 / 9,
+                viewportFraction: 0.8,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    // Optionally handle slider index changes
+                  });
+                },
+              ),
+              items: imgList
+                  .map((item) => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          image: DecorationImage(
+                            image: NetworkImage(item),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ))
+                  .toList(),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 20,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    "Courses",
+                    style: TextStyle(
+                      color: AppColors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  // Add your course cards here
+                ],
+              ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: Container(
