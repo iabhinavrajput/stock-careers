@@ -106,14 +106,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       text: 'Log In',
                       borderColor:
                           Theme.of(context).brightness == Brightness.dark
-                              ? Color(0xff858597)
+                              ? AppColors.grey
                               : AppColors.lightPrimary,
                       onPressed: () {
                         // your logic
                       },
                       backgroundColor:
                           Theme.of(context).brightness == Brightness.dark
-                              ? Color(0xff858597)
+                              ? AppColors.grey
                               : Colors.white,
                       textColor: Theme.of(context).brightness == Brightness.dark
                           ? Colors.white
