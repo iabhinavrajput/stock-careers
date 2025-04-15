@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stock_careers/blocs/auth/auth_bloc.dart';
+import 'package:stock_careers/blocs/auth/auth_event.dart';
 import 'package:stock_careers/presentation/widgets/input_field.dart';
 import 'package:stock_careers/routes/app_routes.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
@@ -15,6 +18,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isPasswordVisible = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final mobileNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +88,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: emailController,
                         hintText: 'example@mail.com',
                       ),
+                      InputField(
+                        label: 'First Name',
+                        controller: firstNameController,
+                        hintText: 'first name',
+                      ),
+                      InputField(
+                        label: 'Last Name',
+                        controller: lastNameController,
+                        hintText: 'last name',
+                      ),
+                      InputField(
+                        label: 'Mobile Number',
+                        controller: mobileNumberController,
+                        hintText: '10 digits number',
+                      ),
                       const SizedBox(height: 20),
                       InputField(
                         label: 'Password',
@@ -96,8 +117,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: AppColors.hint,
                           ),
                           onPressed: () {
-                            setState(() =>
-                                isPasswordVisible = !isPasswordVisible);
+                            setState(
+                                () => isPasswordVisible = !isPasswordVisible);
                           },
                         ),
                       ),
@@ -113,7 +134,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           onPressed: () {
-                            // Handle Sign Up logic
+                            context.read<AuthBloc>().add(
+                                  SignUpRequested(
+                                    firstName: firstNameController.text.trim(),
+                                    lastName: lastNameController.text.trim(),
+                                    email: emailController.text.trim(),
+                                    mobileNo:
+                                        mobileNumberController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  ),
+                                );
                           },
                           child: const Text(
                             'Create account',
@@ -123,21 +153,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Checkbox(value: false, onChanged: (_) {}),
-                          const Expanded(
-                            child: Text(
-                              'By creating an account you have to agree with our term & condition.',
-                              style: TextStyle(
-                                color: AppColors.textGrey,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ],
                       ),
                       const SizedBox(height: 16),
                       Row(
