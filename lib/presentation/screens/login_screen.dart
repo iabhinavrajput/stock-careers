@@ -132,8 +132,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: AppColors.hint,
                             ),
                             onPressed: () {
-                              setState(() =>
-                                  isPasswordVisible = !isPasswordVisible);
+                              setState(
+                                  () => isPasswordVisible = !isPasswordVisible);
                             },
                           ),
                         ),
@@ -141,11 +141,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              "Forgot Password?",
-                              style: TextStyle(
-                                color: AppColors.hint,
-                                fontSize: Dimensions.fontMedium,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, AppRoutes.forgetPassword);
+                              },
+                              child: Text(
+                                "Forgot Password?",
+                                style: TextStyle(
+                                  color: AppColors.hint,
+                                  fontSize: Dimensions.fontMedium,
+                                ),
                               ),
                             ),
                           ],
@@ -184,8 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, AppRoutes.signUp);
+                                Navigator.pushNamed(context, AppRoutes.signUp);
                               },
                               child: const Text(
                                 'Sign up',
