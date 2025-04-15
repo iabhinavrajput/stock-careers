@@ -7,6 +7,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:stock_careers/blocs/theme/theme_cubit.dart';
 import 'package:stock_careers/presentation/screens/onboarding.dart';
 import 'package:stock_careers/presentation/screens/splash_screen_wrapper.dart';
+import 'package:stock_careers/routes/app_route_generator.dart';
 import 'package:stock_careers/utils/constants/app_theme.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
           themeMode: ThemeMode.system, // or ThemeMode.dark / ThemeMode.light
 
           home: const SplashScreenWrapper(),
-
+          routes: AppRouteMap.routes, // 👈 Clean and centralized
         );
       },
     );

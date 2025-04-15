@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stock_careers/presentation/widgets/small_button.dart';
+import 'package:stock_careers/presentation/widgets/button/small_button.dart';
+import 'package:stock_careers/routes/route_default.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -98,6 +99,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       text: 'Sign up',
                       onPressed: () {
                         // your logic
+                        Navigator.pushNamed(context, AppRoutes.forgetPassword);
                       },
                       backgroundColor: AppColors.lightPrimary,
                       textColor: Colors.white,
