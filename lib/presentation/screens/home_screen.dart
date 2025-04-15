@@ -24,6 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
         context,
         MaterialPageRoute(builder: (context) => const CourseScreen()), // Navigate to the CourseScreen
       );
+    } else if (index == 2) { // If the Profile tab is tapped
+      // Handle navigation to the Profile screen
+      Navigator.pushNamed(context, '/profile'); // Replace with your profile route
     }
     // You can handle other navigation logic for the Home and Profile tabs similarly
   }

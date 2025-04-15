@@ -1,56 +1,68 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
+
 import 'package:stock_careers/data/models/login_response_model.dart';
 import 'package:stock_careers/utils/constants/api_endpoints.dart';
 
 class AuthService {
   final String _baseUrl = ApiEndpoints.login;
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   Future<LoginResponseModel> login(String email, String password) async {
     try {
-      // Set up custom HttpClient to bypass SSL
-      final client = http.Client();
-      final httpRequest = await _makePostRequest(client, email, password);
+      final response = await _makePostRequest(email, password);
 
-      // If the server returns a successful response
-      if (httpRequest.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(httpRequest.body);
-        return LoginResponseModel.fromJson(data);
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        final loginResponse = LoginResponseModel.fromJson(data);
+
+        if (loginResponse.status) {
+          await _storage.write(key: 'access_token', value: loginResponse.accessToken);
+        }
+
+        return loginResponse;
       } else {
-        // Handle failure (invalid credentials, etc.)
-        throw Exception('Failed to login: ${httpRequest.body}');
+        throw Exception('Failed to login: ${response.body}');
       }
     } catch (e) {
-      // Catch any error (network issues, etc.)
       print("Error during login: $e");
       throw Exception('Login failed: $e');
     }
   }
 
-  // Function to make POST request
-  Future<http.Response> _makePostRequest(http.Client client, String email, String password) async {
+  Future<http.Response> _makePostRequest(String email, String password) async {
     try {
-      // Create a custom HttpClient to bypass certificate verification
-      final httpClient = HttpClient();
-      httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => true; // Ignore SSL errors
+      // Accept invalid SSL certificate (for development/testing only)
+      final httpClient = HttpClient()
+        ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+
       final ioClient = IOClient(httpClient);
 
       final response = await ioClient.post(
         Uri.parse(_baseUrl),
-        // headers: {
-        //   "Content-Type": "application/json", // Set content type
-        // },
-        body: ({
+        body: {
           'email': email,
           'password': password,
-        }),
+        },
       );
+
       return response;
     } catch (e) {
       print("Error making POST request: $e");
       rethrow;
     }
+  }
+
+  Future<void> logout() async {
+    await _storage.delete(key: 'access_token');
+  }
+
+  Future<bool> isLoggedIn() async {
+    final token = await _storage.read(key: 'access_token');
+    return token != null;
   }
 }

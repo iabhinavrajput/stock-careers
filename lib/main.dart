@@ -1,22 +1,19 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stock_careers/blocs/auth/auth_bloc.dart';
-import 'package:stock_careers/data/services/auth_service.dart';
-import 'package:stock_careers/routes/app_routes.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'blocs/auth/auth_bloc.dart';
+import 'data/services/auth_service.dart';
+import 'routes/app_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize Firebase
   await Firebase.initializeApp();
 
-  // Get Firebase Messaging Token
-  String? fcmToken = await FirebaseMessaging.instance.getToken();
-  debugPrint("🔥 Firebase Messaging Token: $fcmToken");
+  final storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'access_token');
+  print("Token: $token");
 
-  // Start the app with BLoC
   runApp(
     MultiBlocProvider(
       providers: [
@@ -24,13 +21,14 @@ void main() async {
           create: (context) => AuthBloc(AuthService()),
         ),
       ],
-      child: const MyApp(),
+      child: MyApp(isLoggedIn: token != null),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +37,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
       ),
-      initialRoute: AppRoutes.login,
+      initialRoute: isLoggedIn ? AppRoutes.home : AppRoutes.login,
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }
