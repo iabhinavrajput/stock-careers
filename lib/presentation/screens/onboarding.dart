@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stock_careers/presentation/widgets/small_button.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -14,19 +15,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'title': 'Quick and easy\nlearning',
       'image': 'assets/images/onboarding/onboarding2.png',
       'description':
-          'Easy and fast learning at any time to help you improve various skill.'
+          'Easy and fast learning at any\ntime to help you improve various skill.'
     },
     {
       'title': 'Create your own study plan',
       'image': 'assets/images/onboarding/onboarding1.png',
       'description':
-          'Study according to the study plan, make study more motivated'
+          'Study according to them study\nplan, make study more motivated'
     },
     {
-      'title': 'Numerous courses',
+      'title': 'Numerous\ncourses',
       'image': 'assets/images/onboarding/onboarding3.png',
-      'description':
-          'Free courses for you to find your way to learning'
+      'description': 'Free courses for you to\nfind your way to learning'
     },
   ];
 
@@ -36,9 +36,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
         body: Container(
-          margin: EdgeInsets.symmetric(horizontal: 30,vertical: 20),
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         children: [
@@ -71,49 +70,63 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       child: Text(
                         onboardingData[index]['description']!,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 16),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      // crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: List.generate(
+                        onboardingData.length,
+                        (index) => buildDot(index, context),
+                      ),
+                    ),
                   ],
                 );
               },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              onboardingData.length,
-              (index) => buildDot(index, context),
-            ),
-          ),
           SizedBox(height: 40),
           _currentIndex == onboardingData.length - 1
-              ? TextButton(
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => HomeView(languageCode: 'en'),
-                    //   ),
-                    // );
-                    // Navigate to home screen or next page
-                  },
-                  child: Text(
-                    'Get Started',
-                    style: TextStyle(color: Colors.amber),
-                  ),
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SmallButton(
+                      text: 'Sign up',
+                      onPressed: () {
+                        // your logic
+                      },
+                      backgroundColor: AppColors.lightPrimary,
+                      textColor: Colors.white,
+                    ),
+                    SmallButton(
+                      text: 'Log In',
+                      borderColor:
+                          Theme.of(context).brightness == Brightness.dark
+                              ? Color(0xff858597)
+                              : AppColors.lightPrimary,
+                      onPressed: () {
+                        // your logic
+                      },
+                      backgroundColor:
+                          Theme.of(context).brightness == Brightness.dark
+                              ? Color(0xff858597)
+                              : Colors.white,
+                      textColor: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : AppColors.lightPrimary,
+                    ),
+                  ],
                 )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => HomeView(languageCode: 'en'),
-                        //   ),
-                        // );
+                        _pageController.jumpToPage(onboardingData.length - 1);
                       },
                       child: Text(
                         'Skip',
@@ -147,16 +160,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget buildDot(int index, BuildContext context) {
     return Container(
-      height: 10,
+      height: 5,
       width: _currentIndex == index ? 20 : 10,
       margin: EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: _currentIndex == index
-            ? Theme.of(context).brightness == Brightness.dark
-                ? Colors.white
-                : AppColors.lightPrimary
-            : Colors.grey,
+        color: _currentIndex == index ? AppColors.lightPrimary : Colors.grey,
       ),
     );
   }

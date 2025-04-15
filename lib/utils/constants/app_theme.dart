@@ -4,23 +4,18 @@ import 'package:stock_careers/utils/constants/textstyle.dart';
 
 class AppThemes {
   static final ThemeData lightTheme = ThemeData(
-    brightness: Brightness.light,
-    primarySwatch: Colors.amber,
-    scaffoldBackgroundColor: Colors.white,
-    textTheme: GoogleFonts.poppinsTextTheme().copyWith(
-      headlineLarge: AppTextStyles.light.headlineLarge,
-      titleMedium: AppTextStyles.light.titleMedium
-    )
-  );
+      brightness: Brightness.light,
+      // primarySwatch: Color(0xff3D5CFF),
+      scaffoldBackgroundColor: Colors.white,
+      textTheme: GoogleFonts.poppinsTextTheme().copyWith(
+          headlineLarge: AppTextStyles.light.headlineLarge,
+          titleMedium: AppTextStyles.light.titleMedium,));
 
   static final ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
-    primarySwatch: Colors.amber,
-    scaffoldBackgroundColor: Color(0xff1F1F39),
-       textTheme:GoogleFonts.poppinsTextTheme().copyWith(
-      headlineLarge: AppTextStyles.dark.headlineLarge,
-            titleMedium: AppTextStyles.light.titleMedium
-
-    )
-  );
+      brightness: Brightness.dark,
+      // primarySwatch: Color(0xff3D5CFF),
+      scaffoldBackgroundColor: Color(0xff1F1F39),
+      textTheme: GoogleFonts.poppinsTextTheme().copyWith(
+          headlineLarge: AppTextStyles.dark.headlineLarge,
+          titleMedium: AppTextStyles.dark.titleMedium,));
 }
