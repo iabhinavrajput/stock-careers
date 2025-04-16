@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:stock_careers/utils/constants/dimensions.dart';
 
-class InputField extends StatelessWidget {
+class InputField extends StatefulWidget {
   final String label;
   final TextEditingController controller;
   final String hintText;
@@ -19,6 +19,47 @@ class InputField extends StatelessWidget {
   });
 
   @override
+  State<InputField> createState() => _InputFieldState();
+}
+
+class _InputFieldState extends State<InputField> {
+  final FocusNode _focusNode = FocusNode();
+  String? _errorText;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Listener for when the text changes
+    widget.controller.addListener(() {
+      setState(() {
+        // If text is not empty, clear the error text
+        _errorText = widget.controller.text.trim().isEmpty
+            ? '${widget.label} is required'
+            : null;
+      });
+    });
+
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
+        // Validate on focus lost (only if text is empty)
+        setState(() {
+          _errorText = widget.controller.text.trim().isEmpty
+              ? '${widget.label} is required'
+              : null;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(() {}); // Remove listener when disposed
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -29,7 +70,7 @@ class InputField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            label,
+            widget.label,
             style: TextStyle(
               color: AppColors.hint,
               fontSize: Dimensions.fontMedium,
@@ -37,24 +78,25 @@ class InputField extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           TextField(
-            controller: controller,
-            obscureText: obscureText,
-            style:  TextStyle(
+            controller: widget.controller,
+            focusNode: _focusNode,
+            obscureText: widget.obscureText,
+            style: TextStyle(
               color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.white
                   : Colors.black,
             ),
             decoration: InputDecoration(
-              hintText: hintText,
+              hintText: widget.hintText,
               hintStyle: const TextStyle(color: AppColors.hint),
               filled: true,
               fillColor: Theme.of(context).brightness == Brightness.dark
                   ? AppColors.inputField
                   : Colors.white,
-              suffixIcon: suffixIcon,
+              suffixIcon: widget.suffixIcon,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide:BorderSide(
+                borderSide: BorderSide(
                   color: Theme.of(context).brightness == Brightness.dark
                       ? AppColors.inputField
                       : AppColors.hint,
@@ -74,6 +116,18 @@ class InputField extends StatelessWidget {
               ),
             ),
           ),
+          // Display error text below the entire container if the field is empty
+          if (_errorText != null && _errorText!.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(
+                _errorText!,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: Dimensions.fontSmall,
+                ),
+              ),
+            ),
         ],
       ),
     );

@@ -24,6 +24,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final mobileNumberController = TextEditingController();
+  bool isFormValid = false;
+  bool isPasswordValid = false;
+  bool isEmailValid = false;
+  bool isMobileValid = false;
+
+  void validateForm() {
+    setState(() {
+      // Check if all fields are filled and valid
+      isFormValid = emailController.text.isNotEmpty &&
+          firstNameController.text.isNotEmpty &&
+          lastNameController.text.isNotEmpty &&
+          mobileNumberController.text.isNotEmpty &&
+          passwordController.text.isNotEmpty &&
+          isPasswordValid &&
+          isEmailValid &&
+          isMobileValid;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    emailController.addListener(validateForm);
+    firstNameController.addListener(validateForm);
+    lastNameController.addListener(validateForm);
+    mobileNumberController.addListener(validateForm);
+    passwordController.addListener(validateForm);
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    mobileNumberController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +87,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   'Sign Up',
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
-                // SizedBox(height: 1),
                 const Text(
                   'Enter your details below & free sign up',
                   style: TextStyle(
@@ -86,91 +123,87 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 32),
-                      // InputField(
-                      //   label: 'Your Email',
-                      //   controller: emailController,
-                      //   hintText: 'example@mail.com',
-                      // ),
-                      CustomEmailTextField(controller: emailController),
-                      const SizedBox(height: 10),
-
                       InputField(
                         label: 'First Name',
                         controller: firstNameController,
                         hintText: 'first name',
                       ),
                       const SizedBox(height: 10),
-
                       InputField(
                         label: 'Last Name',
                         controller: lastNameController,
                         hintText: 'last name',
                       ),
                       const SizedBox(height: 10),
-
+                      CustomEmailTextField(
+                        controller: emailController,
+                        onValidationChanged: (isValid) {
+                          isEmailValid = isValid;
+                          validateForm();
+                        },
+                      ),
+                      const SizedBox(height: 10),
                       CustomMobileField(
                         controller: mobileNumberController,
                         hintText: '10 Digits Number',
+                        onValidationChanged: (isValid) {
+                          isMobileValid = isValid;
+                          validateForm();
+                        },
                       ),
                       const SizedBox(height: 10),
-                      // InputField(
-                      //   label: 'Password',
-                      //   controller: passwordController,
-                      //   hintText: 'Password',
-                      //   obscureText: !isPasswordVisible,
-                      //   suffixIcon: IconButton(
-                      //     icon: Icon(
-                      //       isPasswordVisible
-                      //           ? Icons.visibility
-                      //           : Icons.visibility_off,
-                      //       color: AppColors.hint,
-                      //     ),
-                      //     onPressed: () {
-                      //       setState(
-                      //           () => isPasswordVisible = !isPasswordVisible);
-                      //     },
-                      //   ),
-                      // ),
                       CustomPasswordField(
                         controller: passwordController,
                         hintText: 'Password',
-                        showValidations: false, // or true, based on your need
+                        showValidations: true,
                         onValidationChanged: (isValid) {
-                          // Optional: update state if needed
+                          isPasswordValid = isValid;
+                          validateForm();
                         },
                       ),
                       const SizedBox(height: 28),
-                      SizedBox(
-                        width: Dimensions.screenWidth * 0.9,
-                        height: Dimensions.buttonHeight,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          onPressed: () {
-                            context.read<AuthBloc>().add(
-                                  SignUpRequested(
-                                    firstName: firstNameController.text.trim(),
-                                    lastName: lastNameController.text.trim(),
-                                    email: emailController.text.trim(),
-                                    mobileNo:
-                                        mobileNumberController.text.trim(),
-                                    password: passwordController.text.trim(),
-                                  ),
-                                );
-                          },
-                          child: const Text(
-                            'Create account',
-                            style: TextStyle(
-                              color: AppColors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
+                     SizedBox(
+  width: Dimensions.screenWidth * 0.9,
+  height: Dimensions.buttonHeight,
+  child: ElevatedButton(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+        (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return AppColors.primary.withOpacity(0.5); // Disabled state
+          }
+          return AppColors.primary; // Enabled state
+        },
+      ),
+      shape: MaterialStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    ),
+    onPressed: isFormValid
+        ? () {
+            context.read<AuthBloc>().add(
+                  SignUpRequested(
+                    firstName: firstNameController.text.trim(),
+                    lastName: lastNameController.text.trim(),
+                    email: emailController.text.trim(),
+                    mobileNo: mobileNumberController.text.trim(),
+                    password: passwordController.text.trim(),
+                  ),
+                );
+          }
+        : null,
+    child: const Text(
+      'Create account',
+      style: TextStyle(
+        color: AppColors.white,
+        fontSize: 16,
+      ),
+    ),
+  ),
+),
+
                       const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

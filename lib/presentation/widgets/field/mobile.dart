@@ -3,20 +3,64 @@ import 'package:flutter/services.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:stock_careers/utils/constants/dimensions.dart';
 
-class CustomMobileField extends StatelessWidget {
+class CustomMobileField extends StatefulWidget {
   final TextEditingController controller;
   final String label;
   final String? hintText;
+  final Function(bool) onValidationChanged; // Add this parameter
 
   const CustomMobileField({
     super.key,
     required this.controller,
     this.label = 'Mobile Number',
     this.hintText = 'Enter your mobile number',
+    required this.onValidationChanged, // Include this in the constructor
   });
 
   @override
+  State<CustomMobileField> createState() => _CustomMobileFieldState();
+}
+
+class _CustomMobileFieldState extends State<CustomMobileField> {
+  String? errorText;
+
+  void validate(String value) {
+    bool isValid = true;
+
+    if (value.isEmpty) {
+      errorText = "Mobile number is required";
+      isValid = false;
+    } else if (value.length < 10) {
+      errorText = "Mobile number must be 10 digits";
+      isValid = false;
+    } else {
+      errorText = null;
+    }
+
+    setState(() {});
+    widget.onValidationChanged(isValid); // Notify the parent widget about validation
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(() {
+      validate(widget.controller.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(() {
+      validate(widget.controller.text);
+    });
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: Dimensions.pagePadding * 0.04,
@@ -26,7 +70,7 @@ class CustomMobileField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            label,
+            widget.label,
             style: TextStyle(
               color: AppColors.hint,
               fontSize: Dimensions.fontMedium,
@@ -34,29 +78,24 @@ class CustomMobileField extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           TextField(
-            controller: controller,
+            controller: widget.controller,
             keyboardType: TextInputType.phone,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             maxLength: 10,
+            onChanged: validate,
             style: TextStyle(
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white
-                  : Colors.black,
+              color: isDark ? Colors.white : Colors.black,
             ),
             decoration: InputDecoration(
-              counterText: "", // Hide character counter
-              hintText: hintText,
+              counterText: "",
+              hintText: widget.hintText,
               hintStyle: const TextStyle(color: AppColors.hint),
               filled: true,
-              fillColor: Theme.of(context).brightness == Brightness.dark
-                  ? AppColors.inputField
-                  : Colors.white,
+              fillColor: isDark ? AppColors.inputField : Colors.white,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? AppColors.inputField
-                      : AppColors.hint,
+                  color: isDark ? AppColors.inputField : AppColors.hint,
                   width: 1,
                 ),
               ),
@@ -71,8 +110,19 @@ class CustomMobileField extends StatelessWidget {
                 horizontal: 16,
                 vertical: 18,
               ),
+              // No errorBorder or errorText set — we handle error display manually below
             ),
           ),
+          if (errorText != null) ...[
+            const SizedBox(height: 5),
+            Text(
+              errorText!,
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 12,
+              ),
+            ),
+          ],
         ],
       ),
     );

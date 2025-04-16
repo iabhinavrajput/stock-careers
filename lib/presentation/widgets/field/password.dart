@@ -208,21 +208,21 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
             // ),
           ],
         ),
-        if (widget.showValidations)
-          ValueListenableBuilder<String>(
-            valueListenable: validationMessage,
-            builder: (context, message, _) {
-              return message.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Text(
-                        message,
-                        style: const TextStyle(color: Colors.red, fontSize: 12),
-                      ),
-                    )
-                  : const SizedBox.shrink();
-            },
-          ),
+        const SizedBox(height: 5),
+        ValueListenableBuilder<String>(
+          valueListenable: validationMessage,
+          builder: (context, message, _) {
+            return widget.showValidations && message.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      message,
+                      style: const TextStyle(color: Colors.red, fontSize: 12),
+                    ),
+                  )
+                : const SizedBox.shrink();
+          },
+        ),
       ],
     );
   }
