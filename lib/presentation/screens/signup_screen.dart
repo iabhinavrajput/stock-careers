@@ -34,13 +34,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
           // Header Section
           Padding(
             padding: EdgeInsets.only(
-              top: Dimensions.pagePadding * 5,
+              top: Dimensions.pagePadding * 3,
               left: Dimensions.pagePadding,
             ),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Sign Up',
                   style: TextStyle(
                     color: AppColors.white,
@@ -49,14 +49,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 // SizedBox(height: 1),
-                Text(
+                const Text(
                   'Enter your details below & free sign up',
                   style: TextStyle(
                     color: AppColors.hint,
                     fontSize: 16,
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: Dimensions.screenHeight*0.02),
               ],
             ),
           ),
@@ -76,7 +76,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: Dimensions.pagePadding,
-                  vertical: Dimensions.pagePadding,
+                  vertical: Dimensions.pagePadding*0.1,
                 ),
                 child: SingleChildScrollView(
                   child: Column(
