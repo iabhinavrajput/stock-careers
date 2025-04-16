@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stock_careers/presentation/screens/auth/otp_screen.dart';
 import 'package:stock_careers/presentation/widgets/button/button.dart';
 import 'package:stock_careers/presentation/widgets/field/email.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
@@ -79,7 +80,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       onPressed: isEmailValid
                           ? () {
                               // Handle OTP logic
-                              
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) => const PinputExample()),
+                              );
                               print("Sending OTP to: ${emailController.text}");
                             }
                           : () {},
