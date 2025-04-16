@@ -4,6 +4,7 @@ class ApiEndpoints {
   static const String login = '$baseUrl/login';
   static const String register = '$baseUrl/register';
   static const String courses = '$baseUrl/courses';
+  static const String courseById = '$baseUrl/course_by_id'; 
   static const String fetchUserData = '$baseUrl/user/data';
   static const String updateUserProfile = '$baseUrl/user/update';
   static const String fetchPosts = '$baseUrl/posts';

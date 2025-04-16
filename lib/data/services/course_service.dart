@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:stock_careers/data/models/course_detail_model.dart';
 import 'package:stock_careers/utils/constants/api_endpoints.dart';
 import '../models/course_model.dart';
 
@@ -44,4 +45,23 @@ class CourseService {
       throw Exception('Failed to fetch courses');
     }
   }
+
+  Future<CourseDetailModel> fetchCourseDetail(String courseId) async {
+    final token = await _storage.read(key: 'access_token');
+    final client = _getHttpClient();
+
+    final response = await client.get(
+      Uri.parse('${ApiEndpoints.courseById}/$courseId'),
+      headers: {'Authorization': '$token'},
+    );
+
+    if (response.statusCode == 200) {
+      final decoded = json.decode(response.body);
+      return CourseDetailModel.fromJson(decoded['data']);
+    } else {
+      throw Exception('Failed to fetch course details');
+    }
+  }
+
+
 }

@@ -4,6 +4,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:stock_careers/blocs/course/course_bloc.dart';
 import 'package:stock_careers/blocs/course/course_event.dart';
 import 'package:stock_careers/blocs/course/course_state.dart';
+import 'package:stock_careers/presentation/screens/course_detail_screen.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 
 class CourseScreen extends StatefulWidget {
@@ -151,62 +152,74 @@ class _CourseScreenState extends State<CourseScreen> {
                 itemCount: state.courses.length,
                 itemBuilder: (context, index) {
                   final course = state.courses[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Container(
-                      height: 150,
-                      decoration: BoxDecoration(
-                        color: AppColors.cardBackground,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: AppColors.cardBackgroundLight,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Image.network(course.courseImage,
-                                width: 80, height: 100, fit: BoxFit.fitWidth),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(course.courseName,
-                                      style: const TextStyle(
-                                          color: AppColors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold)),
-                                  const SizedBox(height: 6),
-                                  Text(course.categoryName,
-                                      style: const TextStyle(
-                                          color: AppColors.hint, fontSize: 14)),
-                                  const SizedBox(height: 6),
-                                  Row(
-                                    children: [
-                                      Text(
-                                          "Price: ${course.price.isEmpty ? 'Free' : course.price}",
-                                          style: const TextStyle(
-                                              color: AppColors.primary,
-                                              fontWeight: FontWeight.bold)),
-                                      const SizedBox(width: 10),
-                                      Text(course.duration,
-                                          style: const TextStyle(
-                                              color: Colors.red, fontSize: 12)),
-                                    ],
-                                  ),
-                                 
-                                ],
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              CourseDetailScreen(courseId: course.id),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: Container(
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: AppColors.cardBackground,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              margin: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: AppColors.cardBackgroundLight,
+                                borderRadius: BorderRadius.circular(15),
                               ),
+                              child: Image.network(course.courseImage,
+                                  width: 80, height: 100, fit: BoxFit.fitWidth),
                             ),
-                          )
-                        ],
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(course.courseName,
+                                        style: const TextStyle(
+                                            color: AppColors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold)),
+                                    const SizedBox(height: 6),
+                                    Text(course.categoryName,
+                                        style: const TextStyle(
+                                            color: AppColors.hint,
+                                            fontSize: 14)),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      children: [
+                                        Text(
+                                            "Price: ${course.price.isEmpty ? 'Free' : course.price}",
+                                            style: const TextStyle(
+                                                color: AppColors.primary,
+                                                fontWeight: FontWeight.bold)),
+                                        const SizedBox(width: 10),
+                                        Text(course.duration,
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 12)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   );
