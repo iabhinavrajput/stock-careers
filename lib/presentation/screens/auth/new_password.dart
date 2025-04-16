@@ -84,7 +84,7 @@ class _NewPasswordState extends State<NewPassword> {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       "Enter New Password",
-                      style: Theme.of(context).textTheme.headlineLarge,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
                 ),

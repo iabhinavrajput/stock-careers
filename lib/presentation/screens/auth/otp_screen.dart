@@ -95,7 +95,7 @@ class _PinputExampleState extends State<PinputExample> {
                         alignment: Alignment.center,
                         child: Text(
                           "OTP Verification",
-                          style: Theme.of(context).textTheme.headlineLarge,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                       ),
                     ),

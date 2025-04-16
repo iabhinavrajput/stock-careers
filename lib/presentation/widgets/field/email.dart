@@ -1,10 +1,8 @@
-// lib/presentation/widgets/custom_email_text_field.dart
-
 import 'package:flutter/material.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:stock_careers/utils/constants/dimensions.dart';
 
-class CustomEmailTextField extends StatelessWidget {
+class CustomEmailTextField extends StatefulWidget {
   final TextEditingController controller;
   final String label;
   final String hintText;
@@ -20,9 +18,27 @@ class CustomEmailTextField extends StatelessWidget {
     this.onValidationChanged,
   });
 
+  @override
+  State<CustomEmailTextField> createState() => _CustomEmailTextFieldState();
+}
+
+class _CustomEmailTextFieldState extends State<CustomEmailTextField> {
+  String? errorText;
+
   bool isValidEmail(String email) {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     return emailRegex.hasMatch(email);
+  }
+
+  void _onChanged(String value) {
+    final isValid = isValidEmail(value);
+    setState(() {
+      errorText =
+          isValid || value.isEmpty ? null : 'Enter a valid email address';
+    });
+    if (widget.onValidationChanged != null) {
+      widget.onValidationChanged!(isValid);
+    }
   }
 
   @override
@@ -36,7 +52,7 @@ class CustomEmailTextField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            label,
+            widget.label,
             style: TextStyle(
               color: AppColors.hint,
               fontSize: Dimensions.fontMedium,
@@ -44,26 +60,21 @@ class CustomEmailTextField extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           TextField(
-            controller: controller,
+            controller: widget.controller,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.white
                   : Colors.black,
             ),
-            onChanged: (value) {
-              if (onValidationChanged != null) {
-                onValidationChanged!(isValidEmail(value));
-              }
-            },
+            onChanged: _onChanged,
             decoration: InputDecoration(
-              hintText: hintText,
+              hintText: widget.hintText,
               hintStyle: const TextStyle(color: AppColors.hint),
               filled: true,
               fillColor: Theme.of(context).brightness == Brightness.dark
                   ? AppColors.inputField
                   : Colors.white,
-              prefixIcon: Icon(icon, color: AppColors.lightPrimary),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
@@ -84,8 +95,17 @@ class CustomEmailTextField extends StatelessWidget {
                 horizontal: 16,
                 vertical: 18,
               ),
+              // No errorText to preserve original design
             ),
           ),
+          if (errorText != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Text(
+                errorText!,
+                style: const TextStyle(color: Colors.red, fontSize: 12),
+              ),
+            ),
         ],
       ),
     );

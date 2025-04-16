@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_careers/blocs/auth/auth_bloc.dart';
 import 'package:stock_careers/blocs/auth/auth_event.dart';
+import 'package:stock_careers/presentation/widgets/field/email.dart';
+import 'package:stock_careers/presentation/widgets/field/password.dart';
 import 'package:stock_careers/presentation/widgets/input_field.dart';
 import 'package:stock_careers/routes/app_routes.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
@@ -27,7 +29,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     Dimensions.init(context); // initialize screen dimensions
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? Theme.of(context).scaffoldBackgroundColor
+          : AppColors.form_scaffold,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -40,13 +44,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Sign Up',
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 // SizedBox(height: 1),
                 const Text(
@@ -56,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontSize: 16,
                   ),
                 ),
-                SizedBox(height: Dimensions.screenHeight*0.02),
+                SizedBox(height: Dimensions.screenHeight * 0.02),
               ],
             ),
           ),
@@ -66,8 +66,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Container(
               height: Dimensions.screenHeight * 0.8,
               width: double.infinity,
-              decoration: const BoxDecoration(
-                color: AppColors.cardBackground,
+              decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.form_bg
+                    : Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(32),
                   topRight: Radius.circular(32),
@@ -76,18 +78,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: Dimensions.pagePadding,
-                  vertical: Dimensions.pagePadding*0.1,
+                  vertical: Dimensions.pagePadding * 0.1,
                 ),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 32),
-                      InputField(
-                        label: 'Your Email',
-                        controller: emailController,
-                        hintText: 'example@mail.com',
-                      ),
+                      // InputField(
+                      //   label: 'Your Email',
+                      //   controller: emailController,
+                      //   hintText: 'example@mail.com',
+                      // ),
+                      CustomEmailTextField(controller: emailController),
                       InputField(
                         label: 'First Name',
                         controller: firstNameController,
@@ -104,23 +107,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         hintText: '10 digits number',
                       ),
                       const SizedBox(height: 20),
-                      InputField(
-                        label: 'Password',
+                      // InputField(
+                      //   label: 'Password',
+                      //   controller: passwordController,
+                      //   hintText: 'Password',
+                      //   obscureText: !isPasswordVisible,
+                      //   suffixIcon: IconButton(
+                      //     icon: Icon(
+                      //       isPasswordVisible
+                      //           ? Icons.visibility
+                      //           : Icons.visibility_off,
+                      //       color: AppColors.hint,
+                      //     ),
+                      //     onPressed: () {
+                      //       setState(
+                      //           () => isPasswordVisible = !isPasswordVisible);
+                      //     },
+                      //   ),
+                      // ),
+                      CustomPasswordField(
                         controller: passwordController,
                         hintText: 'Password',
-                        obscureText: !isPasswordVisible,
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            isPasswordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: AppColors.hint,
-                          ),
-                          onPressed: () {
-                            setState(
-                                () => isPasswordVisible = !isPasswordVisible);
-                          },
-                        ),
+                        showValidations: false, // or true, based on your need
+                        onValidationChanged: (isValid) {
+                          // Optional: update state if needed
+                        },
                       ),
                       const SizedBox(height: 28),
                       SizedBox(

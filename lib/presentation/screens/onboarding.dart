@@ -63,7 +63,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       child: Text(
                         onboardingData[index]['title']!,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headlineLarge,
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ),
                     SizedBox(height: 10),

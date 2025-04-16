@@ -9,7 +9,12 @@ class AppThemes {
       scaffoldBackgroundColor: Colors.white,
       textTheme: GoogleFonts.poppinsTextTheme().copyWith(
           headlineLarge: AppTextStyles.light.headlineLarge,
-          titleMedium: AppTextStyles.light.titleMedium,));
+                    headlineSmall:AppTextStyles.light.headlineSmall ,
+
+          titleMedium: AppTextStyles.light.titleMedium,
+                    titleSmall: AppTextStyles.light.titleSmall,
+
+          ));
 
   static final ThemeData darkTheme = ThemeData(
       brightness: Brightness.dark,
@@ -17,5 +22,8 @@ class AppThemes {
       scaffoldBackgroundColor: Color(0xff1F1F39),
       textTheme: GoogleFonts.poppinsTextTheme().copyWith(
           headlineLarge: AppTextStyles.dark.headlineLarge,
-          titleMedium: AppTextStyles.dark.titleMedium,));
+          headlineSmall:AppTextStyles.dark.headlineSmall ,
+          titleMedium: AppTextStyles.dark.titleMedium,
+                    titleSmall: AppTextStyles.light.titleSmall,
+));
 }

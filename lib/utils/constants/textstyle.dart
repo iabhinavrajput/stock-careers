@@ -15,12 +15,24 @@ class _Light {
   const _Light();
 
   TextStyle get headlineLarge => TextStyle(
+        fontSize: 32,
+        fontWeight: FontWeight.w700,
+      );
+
+      TextStyle get headlineSmall => TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w700,
       );
 
+
+
   TextStyle get titleMedium => TextStyle(
         fontSize: 16,
+        fontWeight: FontWeight.w400,
+        fontFamily: 'Poppins',
+      );
+        TextStyle get titleSmall => TextStyle(
+        fontSize: 12,
         fontWeight: FontWeight.w400,
         fontFamily: 'Poppins',
       );
@@ -34,9 +46,19 @@ class _Dark {
         fontWeight: FontWeight.w700,
       );
 
+      TextStyle get headlineSmall => TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w700,
+      );
+
   TextStyle get titleMedium => TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w400,
+      );
+        TextStyle get titleSmall => TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        fontFamily: 'Poppins',
       );
 }
 
