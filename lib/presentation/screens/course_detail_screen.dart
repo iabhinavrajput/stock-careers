@@ -42,6 +42,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     return BlocProvider.value(
       value: _courseDetailBloc,
       child: Scaffold(
+        backgroundColor: AppColors.background,
         body: BlocBuilder<CourseDetailBloc, CourseDetailState>(
           builder: (context, state) {
             if (state is CourseDetailLoading) {
@@ -112,7 +113,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: NetworkImage(course.courseImage),
-                                fit: BoxFit.fitHeight,
+                                fit: BoxFit.fitWidth,
                               ),
                             ),
                           )
