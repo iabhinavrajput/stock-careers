@@ -47,6 +47,7 @@ dependencies:
   page_transition: ^2.2.1
   flutter_bloc: ^9.1.0
   google_fonts: ^6.2.1
+  shimmer: any
 
 dev_dependencies:
   flutter_test:
