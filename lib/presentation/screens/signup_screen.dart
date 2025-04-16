@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_careers/blocs/auth/auth_bloc.dart';
 import 'package:stock_careers/blocs/auth/auth_event.dart';
 import 'package:stock_careers/presentation/widgets/field/email.dart';
+import 'package:stock_careers/presentation/widgets/field/mobile.dart';
 import 'package:stock_careers/presentation/widgets/field/password.dart';
 import 'package:stock_careers/presentation/widgets/input_field.dart';
 import 'package:stock_careers/routes/app_routes.dart';
@@ -91,22 +92,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       //   hintText: 'example@mail.com',
                       // ),
                       CustomEmailTextField(controller: emailController),
+                      const SizedBox(height: 10),
+
                       InputField(
                         label: 'First Name',
                         controller: firstNameController,
                         hintText: 'first name',
                       ),
+                      const SizedBox(height: 10),
+
                       InputField(
                         label: 'Last Name',
                         controller: lastNameController,
                         hintText: 'last name',
                       ),
-                      InputField(
-                        label: 'Mobile Number',
+                      const SizedBox(height: 10),
+
+                      CustomMobileField(
                         controller: mobileNumberController,
-                        hintText: '10 digits number',
+                        hintText: '10 Digits Number',
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       // InputField(
                       //   label: 'Password',
                       //   controller: passwordController,

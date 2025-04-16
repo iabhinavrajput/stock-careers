@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:stock_careers/utils/constants/dimensions.dart';
 
-class InputField extends StatelessWidget {
-  final String label;
+class CustomMobileField extends StatelessWidget {
   final TextEditingController controller;
-  final String hintText;
-  final bool obscureText;
-  final Widget? suffixIcon;
+  final String label;
+  final String? hintText;
 
-  const InputField({
+  const CustomMobileField({
     super.key,
-    required this.label,
     required this.controller,
-    required this.hintText,
-    this.obscureText = false,
-    this.suffixIcon,
+    this.label = 'Mobile Number',
+    this.hintText = 'Enter your mobile number',
   });
 
   @override
@@ -38,23 +35,25 @@ class InputField extends StatelessWidget {
           const SizedBox(height: 5),
           TextField(
             controller: controller,
-            obscureText: obscureText,
-            style:  TextStyle(
+            keyboardType: TextInputType.phone,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            maxLength: 10,
+            style: TextStyle(
               color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.white
                   : Colors.black,
             ),
             decoration: InputDecoration(
+              counterText: "", // Hide character counter
               hintText: hintText,
               hintStyle: const TextStyle(color: AppColors.hint),
               filled: true,
               fillColor: Theme.of(context).brightness == Brightness.dark
                   ? AppColors.inputField
                   : Colors.white,
-              suffixIcon: suffixIcon,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide:BorderSide(
+                borderSide: BorderSide(
                   color: Theme.of(context).brightness == Brightness.dark
                       ? AppColors.inputField
                       : AppColors.hint,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../utils/constants/colors.dart';
+import '../../../utils/constants/dimensions.dart';
 
 class CustomPasswordField extends StatefulWidget {
   final TextEditingController controller;
@@ -80,36 +81,46 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          'Password',
+          style: TextStyle(
+            color: AppColors.hint,
+            fontSize: Dimensions.fontMedium,
+          ),
+        ),
+        const SizedBox(height: 5),
         Stack(
           clipBehavior: Clip.none,
           children: [
             Container(
               decoration: BoxDecoration(
-                gradient: _showFloatingLabel
-                    ? const LinearGradient(
-                        colors: [
-                          AppColors.lightPrimary,
-                          AppColors.lightPrimary,
-                        ],
-                      )
-                    : null,
+                // gradient: _showFloatingLabel
+                //     ? const LinearGradient(
+                //         colors: [
+                //           AppColors.lightPrimary,
+                //           AppColors.lightPrimary,
+                //         ],
+                //       )
+                //     : null,
                 color: Colors.white,
                 borderRadius: borderRadius,
               ),
-              padding: _showFloatingLabel
-                  ? const EdgeInsets.all(0.7)
-                  : EdgeInsets.zero,
+              // padding: _showFloatingLabel
+              //     ? const EdgeInsets.all(0.7)
+              //     : EdgeInsets.zero,
               child: Container(
                 decoration: BoxDecoration(
                     color: Theme.of(context).brightness == Brightness.dark
-                        ? AppColors.form_bg
+                        ? AppColors.inputField
                         : Colors.white,
                     borderRadius: BorderRadius.circular(9),
                     border: Border.all(
-                      width: 0.5,
+                      width: 1,
                       color: _showFloatingLabel
                           ? AppColors.lightPrimary
-                          :  AppColors.grey,
+                          : Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.inputField
+                              : AppColors.hint,
                     )),
                 child: ValueListenableBuilder<bool>(
                   valueListenable: isPasswordVisible,
@@ -117,8 +128,8 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
                     return TextField(
                       style: TextStyle(
                         color: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white
-                        : Colors.black,
+                            ? Colors.white
+                            : Colors.black,
                       ),
                       controller: widget.controller,
                       focusNode: _focusNode,
@@ -126,12 +137,9 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
                       obscuringCharacter: '*',
                       onChanged: validatePassword,
                       cursorColor: AppColors.form_bg,
-                      
                       decoration: InputDecoration(
                         hintText: _showFloatingLabel ? '' : widget.hintText,
-                        hintStyle: TextStyle(
-                          color: AppColors.grey,
-                        ),
+                        hintStyle: const TextStyle(color: AppColors.hint),
                         suffixIcon: _showFloatingLabel
                             ? ShaderMask(
                                 shaderCallback: (bounds) =>
@@ -155,7 +163,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
                             : IconButton(
                                 icon: Icon(
                                   isVisible ? Icons.lock_open : Icons.lock,
-                                  color: AppColors.grey,
+                                  color: AppColors.hint,
                                 ),
                                 onPressed: () {
                                   isPasswordVisible.value = !isVisible;
@@ -170,34 +178,34 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
                 ),
               ),
             ),
-            if (_showFloatingLabel)
-              Positioned(
-                left: 15,
-                top: -7,
-                child: Container(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? AppColors.form_bg
-                      : Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: ShaderMask(
-                    shaderCallback: (bounds) => const LinearGradient(
-                      colors: [
-                        AppColors.lightPrimary,
-                        AppColors.lightPrimary,
-                      ],
-                    ).createShader(
-                        Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-                    child: Text(
-                      widget.hintText,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            // if (_showFloatingLabel)
+            // Positioned(
+            //   left: 15,
+            //   top: -7,
+            //   child: Container(
+            //     color: Theme.of(context).brightness == Brightness.dark
+            //         ? AppColors.form_bg
+            //         : Colors.white,
+            //     padding: const EdgeInsets.symmetric(horizontal: 4),
+            //     child: ShaderMask(
+            //       shaderCallback: (bounds) => const LinearGradient(
+            //         colors: [
+            //           AppColors.lightPrimary,
+            //           AppColors.lightPrimary,
+            //         ],
+            //       ).createShader(
+            //           Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
+            //       child: Text(
+            //         widget.hintText,
+            //         style: const TextStyle(
+            //           fontSize: 12,
+            //           fontWeight: FontWeight.w500,
+            //           color: Colors.white,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
         if (widget.showValidations)

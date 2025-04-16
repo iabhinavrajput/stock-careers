@@ -58,7 +58,7 @@ class _CustomEmailTextFieldState extends State<CustomEmailTextField> {
               fontSize: Dimensions.fontMedium,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 5),
           TextField(
             controller: widget.controller,
             keyboardType: TextInputType.emailAddress,
