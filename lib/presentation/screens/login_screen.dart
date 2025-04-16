@@ -8,6 +8,9 @@ import 'package:stock_careers/routes/app_routes.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:stock_careers/utils/constants/dimensions.dart';
 
+import '../widgets/field/email.dart';
+import '../widgets/field/password.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -19,6 +22,25 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isPasswordVisible = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  bool isEmailValid = false;
+  bool isPasswordValid = false;
+
+  bool get isFormValid =>
+      emailController.text.trim().isNotEmpty &&
+      passwordController.text.trim().isNotEmpty &&
+      isEmailValid &&
+      isPasswordValid;
+
+  void validateForm() {
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    emailController.addListener(validateForm);
+    passwordController.addListener(validateForm);
+  }
 
   @override
   void dispose() {
@@ -65,7 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? Theme.of(context).scaffoldBackgroundColor
+            : AppColors.form_scaffold,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -75,16 +99,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 top: Dimensions.pagePadding * 5,
                 left: Dimensions.pagePadding,
               ),
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Log In',
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   SizedBox(height: 20),
                 ],
@@ -96,8 +116,10 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 height: Dimensions.screenHeight * 0.8,
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: AppColors.cardBackground,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.form_bg
+                      : Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(32),
                     topRight: Radius.circular(32),
@@ -113,29 +135,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 32),
-                        InputField(
-                          label: 'Your Email',
+                        CustomEmailTextField(
                           controller: emailController,
-                          hintText: 'example@mail.com',
+                          onValidationChanged: (isValid) {
+                            isEmailValid = isValid;
+                            validateForm();
+                          },
                         ),
                         const SizedBox(height: 20),
-                        InputField(
-                          label: 'Password',
+                        CustomPasswordField(
                           controller: passwordController,
                           hintText: 'Password',
-                          obscureText: !isPasswordVisible,
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              isPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: AppColors.hint,
-                            ),
-                            onPressed: () {
-                              setState(
-                                  () => isPasswordVisible = !isPasswordVisible);
-                            },
-                          ),
+                          showValidations: true,
+                          onValidationChanged: (isValid) {
+                            isPasswordValid = isValid;
+                            validateForm();
+                          },
                         ),
                         const SizedBox(height: 12),
                         Row(
@@ -161,19 +176,31 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: Dimensions.screenWidth * 0.9,
                           height: Dimensions.buttonHeight,
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.disabled)) {
+                                    return AppColors.primary.withOpacity(0.5);
+                                  }
+                                  return AppColors.primary;
+                                },
                               ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  AppColors.white),
                             ),
-                            onPressed: () => _onLoginPressed(context),
+                            onPressed: isFormValid
+                                ? () => _onLoginPressed(context)
+                                : null,
                             child: const Text(
                               'Log In',
-                              style: TextStyle(
-                                color: AppColors.white,
-                                fontSize: 16,
-                              ),
+                              style: TextStyle(fontSize: 16),
                             ),
                           ),
                         ),

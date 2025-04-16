@@ -42,7 +42,7 @@ class _Dark {
   const _Dark();
 
   TextStyle get headlineLarge => TextStyle(
-        fontSize: 22,
+        fontSize: 32,
         fontWeight: FontWeight.w700,
       );
 
