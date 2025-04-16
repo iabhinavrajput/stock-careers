@@ -13,9 +13,9 @@ import 'package:stock_careers/utils/constants/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  String? token = await FirebaseMessaging.instance.getToken();
-  print("Firebase token is: $token");
+  // await Firebase.initializeApp();
+  // String? token = await FirebaseMessaging.instance.getToken();
+  // print("Firebase token is: $token");
 
   runApp(
     BlocProvider(
