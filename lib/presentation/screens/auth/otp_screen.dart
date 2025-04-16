@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
 import 'package:smart_auth/smart_auth.dart';
+import 'package:stock_careers/presentation/screens/auth/new_password.dart';
 import 'package:stock_careers/presentation/widgets/button/button.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:stock_careers/utils/constants/dimensions.dart';
@@ -149,7 +150,16 @@ class _PinputExampleState extends State<PinputExample> {
                     ),
                   ),
                 ),
-                CustomButton(text: "Validate", onPressed: (){})
+                CustomButton(
+                    text: "Validate",
+                    onPressed: () {
+                      // focusNode.unfocus();
+                      // formKey.currentState!.validate();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => const NewPassword()),
+                      );
+                    })
               ],
             ),
           ),
