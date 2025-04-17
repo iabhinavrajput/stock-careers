@@ -5,7 +5,7 @@ import 'package:stock_careers/utils/constants/textstyle.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed; // ✅ Make it nullable
   final Color? backgroundColor;
   final Color? textColor;
   final double borderRadius;
@@ -29,7 +29,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: Dimensions.screenWidth,
-      height: Dimensions.screenHeight*0.065,
+      height: Dimensions.screenHeight * 0.065,
       child: TextButton(
         style: TextButton.styleFrom(
           padding: EdgeInsets.symmetric(

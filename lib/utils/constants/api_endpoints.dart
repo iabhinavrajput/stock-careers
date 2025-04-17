@@ -1,6 +1,6 @@
 class ApiEndpoints {
 
-  static const String baseUrl = 'https://www.stockcareers.com/api';
+  static const String baseUrl = 'https://stockcareers.com/api';
   static const String login = '$baseUrl/login';
   static const String register = '$baseUrl/register';
   static const String fetchUserData = '$baseUrl/user/data';
@@ -11,5 +11,7 @@ class ApiEndpoints {
   static const String fetchComments = '$baseUrl/comments';
   static const String createComment = '$baseUrl/comments/create';
   static const String deleteComment = '$baseUrl/comments/delete';
-
+  static const String forgotPassword = '$baseUrl/forgot_password';
+  static const String verifyOtp = '$baseUrl/verify_otp';
+  static const String updatePassword = '$baseUrl/update_password';
 }
