@@ -18,14 +18,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         if (response.status) {
           // Store token if needed
-          await secureStorage.write(key: 'access_token', value: response.accessToken);
+          await secureStorage.write(
+              key: 'access_token', value: response.accessToken);
           emit(AuthSuccess(response.message));
         } else {
           emit(AuthFailure(response.message));
         }
       } catch (e) {
         print("Login error: $e");
-        emit(AuthFailure("Login failed. Please try again."));
+
+        // Try to extract actual message from API response inside the error string
+        final errorString = e.toString();
+        final messageMatch =
+            RegExp(r'"message"\s*:\s*"([^"]+)"').firstMatch(errorString);
+        final errorMessage = messageMatch != null
+            ? messageMatch.group(1)!
+            : "Login failed. Please try again.";
+
+        emit(AuthFailure(errorMessage));
       }
     });
 
