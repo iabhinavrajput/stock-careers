@@ -171,7 +171,7 @@ class AuthService {
     try {
       final response = await http.post(
         Uri.parse(_updatePasswordUrl),
-        body: ({"email": email, "password": password}),
+        body: ({"email": email, "new_password": password}),
       );
 
       if (response.statusCode == 200) {

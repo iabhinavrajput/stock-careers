@@ -66,7 +66,8 @@ class _NewPasswordState extends State<NewPassword> {
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text('Password reset successful'),
             ));
-            Navigator.pop(context);
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/login', (route) => false); // 👈 go to login
           } else if (state is ForgotPasswordError) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(state.message),
@@ -148,9 +149,8 @@ class _NewPasswordState extends State<NewPassword> {
                               final password =
                                   newPasswordController.text.trim();
                               if (password.length >= 6) {
-                                context
-                                    .read<ForgotPasswordBloc>()
-                                    .add(ResetPasswordEvent(widget.email, password));
+                                context.read<ForgotPasswordBloc>().add(
+                                    ResetPasswordEvent(widget.email, password));
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
@@ -174,4 +174,3 @@ class _NewPasswordState extends State<NewPassword> {
     );
   }
 }
-
