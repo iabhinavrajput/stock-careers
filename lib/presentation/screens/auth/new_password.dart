@@ -6,6 +6,7 @@ import 'package:stock_careers/presentation/widgets/button/button.dart';
 import '../../../blocs/auth/forget_password/forgot_password_bloc.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/dimensions.dart';
+import '../../../utils/constants/snackbar_helper.dart';
 import '../../widgets/field/password.dart';
 
 class NewPassword extends StatefulWidget {
@@ -63,16 +64,16 @@ class _NewPasswordState extends State<NewPassword> {
       body: BlocConsumer<ForgotPasswordBloc, ForgotPasswordState>(
         listener: (context, state) {
           if (state is PasswordResetSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('Password reset successful'),
-            ));
+            SnackbarHelper.showSnackBar(
+              context,
+              "Password Reset successfully",
+              backgroundColor: Colors.green,
+            );
             Navigator.pushNamedAndRemoveUntil(
                 context, '/login', (route) => false); // 👈 go to login
           } else if (state is ForgotPasswordError) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red,
-            ));
+            SnackbarHelper.showSnackBar(
+                context, state.message); // show snackbar here
           }
         },
         builder: (context, state) {

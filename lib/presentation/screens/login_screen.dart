@@ -9,6 +9,7 @@ import 'package:stock_careers/presentation/widgets/input_field.dart';
 import 'package:stock_careers/routes/app_routes.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:stock_careers/utils/constants/dimensions.dart';
+import 'package:stock_careers/utils/constants/snackbar_helper.dart';
 
 import '../../blocs/auth/forget_password/forgot_password_bloc.dart';
 import '../../data/services/auth_service.dart';
@@ -84,11 +85,15 @@ class _LoginScreenState extends State<LoginScreen> {
         } else {
           Navigator.of(context).pop(); // close loading dialog
           if (state is AuthSuccess) {
+            SnackbarHelper.showSnackBar(
+              context,
+              state.message,
+              backgroundColor: Colors.green,
+            );
             Navigator.pushReplacementNamed(context, AppRoutes.home);
           } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.error)),
-            );
+            SnackbarHelper.showSnackBar(
+                context, state.error); // show snackbar here
           }
         }
       },

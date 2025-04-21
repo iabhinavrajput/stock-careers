@@ -22,6 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthSuccess(response.message));
         } else {
           emit(AuthFailure(response.message));
+          
         }
       } catch (e) {
         print("Login error: $e");

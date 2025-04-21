@@ -134,9 +134,7 @@ class _PinputExampleState extends State<PinputExample> {
                         focusNode: focusNode,
                         defaultPinTheme: defaultPinTheme,
                         separatorBuilder: (index) => const SizedBox(width: 8),
-                        validator: (value) {
-                          return value == '2222' ? null : 'Pin is incorrect';
-                        },
+                        
                         hapticFeedbackType: HapticFeedbackType.lightImpact,
                         onCompleted: (pin) {
                           debugPrint('onCompleted: $pin');
