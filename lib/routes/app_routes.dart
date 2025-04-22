@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stock_careers/presentation/screens/auth/forget_password.dart';
+import 'package:stock_careers/presentation/screens/blog_detail_screen.dart';
 import 'package:stock_careers/presentation/screens/blog_screen.dart';
 import 'package:stock_careers/presentation/screens/course_screen.dart';
 import 'package:stock_careers/presentation/screens/home_screen.dart';
@@ -19,6 +20,7 @@ class AppRoutes {
   static const String forgetPassword = '/forget_password';
   static const String splash = '/splash';
   static const String blog = '/blog';
+  static const String blogDetail = '/blogDetail';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -40,6 +42,18 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => SplashScreenWrapper());
       case blog:
         return MaterialPageRoute(builder: (_) => BlogScreen());
+      case blogDetail:
+        final args = settings.arguments;
+        if (args is String) {
+          return MaterialPageRoute(
+            builder: (_) => BlogDetailScreen(blogId: args),
+          );
+        }
+        return MaterialPageRoute(
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('No blog ID provided')),
+          ),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(
