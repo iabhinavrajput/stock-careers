@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stock_careers/presentation/screens/auth/forget_password.dart';
+import 'package:stock_careers/presentation/screens/blog_screen.dart';
 import 'package:stock_careers/presentation/screens/course_screen.dart';
 import 'package:stock_careers/presentation/screens/home_screen.dart';
 import 'package:stock_careers/presentation/screens/login_screen.dart';
@@ -15,10 +16,9 @@ class AppRoutes {
   static const String course = '/course';
   static const String profile = '/profile';
   static const String onboarding = '/onboarding';
-    static const String forgetPassword = '/forget_password';
-        static const String splash = '/splash';
-
-
+  static const String forgetPassword = '/forget_password';
+  static const String splash = '/splash';
+  static const String blog = '/blog';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -32,12 +32,14 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const CourseScreen());
       case profile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
-          case onboarding:
-        return MaterialPageRoute(builder: (_) =>  OnboardingScreen());
-          case forgetPassword:
-        return MaterialPageRoute(builder: (_) =>  ForgotPasswordScreen());
-           case splash:
-        return MaterialPageRoute(builder: (_) =>  SplashScreenWrapper());
+      case onboarding:
+        return MaterialPageRoute(builder: (_) => OnboardingScreen());
+      case forgetPassword:
+        return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
+      case splash:
+        return MaterialPageRoute(builder: (_) => SplashScreenWrapper());
+      case blog:
+        return MaterialPageRoute(builder: (_) => BlogScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(

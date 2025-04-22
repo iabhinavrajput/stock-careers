@@ -24,7 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
         context,
         MaterialPageRoute(builder: (context) => const CourseScreen()), // Navigate to the CourseScreen
       );
-    } else if (index == 2) { // If the Profile tab is tapped
+    } else if(index == 2) {
+      Navigator.pushNamed(context, '/blog'); // Replace with your blog route
+    }
+    else if (index == 3) { // If the Profile tab is tapped
       // Handle navigation to the Profile screen
       Navigator.pushNamed(context, '/profile'); // Replace with your profile route
     }
@@ -34,12 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
   List<IconData> icons = [
     Icons.home,
     Icons.school,
+    Icons.article,
     Icons.person,
   ];
 
   List<String> labels = [
     'Home',
     'Courses',
+    'Blog',
     'Profile',
   ];
 
@@ -95,6 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.background,
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Image Slider
             Padding(
@@ -141,18 +147,108 @@ class _HomeScreenState extends State<HomeScreen> {
                 vertical: 20,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    "Courses",
+                children: [
+                  const Text(
+                    "Categories",
                     style: TextStyle(
                       color: AppColors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   // Add your course cards here
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {},
+                        child: Column(
+                          children: [
+                            const Image(
+                              image: AssetImage('assets/images/Market_Analysis.png'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              "Market\nAnalysis",
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Column(
+                          children: [
+                            const Image(
+                              image: AssetImage('assets/images/Informative_Blogs.png'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                              
+                            ),
+                            const Text(
+                              "Informative\nBlogs",
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Column(
+                          children: [
+                            const Image(
+                              image: AssetImage('assets/images/Webinar_Sessions.png'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              "Webinar\nSessions",
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Column(
+                          children: [
+                            const Image(
+                              image: AssetImage('assets/images/Online_Classes.png'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              "Online\nClasses",
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
