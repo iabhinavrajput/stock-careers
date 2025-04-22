@@ -184,7 +184,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, '/blog'); // Replace with your blog route
+                        },
                         child: Column(
                           children: [
                             const Image(
@@ -192,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             SizedBox(
                               height: 10,
-                              
+
                             ),
                             const Text(
                               "Informative\nBlogs",
