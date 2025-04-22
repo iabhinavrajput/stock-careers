@@ -51,7 +51,8 @@ class BlogService {
         'Authorization': token ?? '',
       },
     );
-
+    print("Status Code: ${response.statusCode}");
+    print("Response: ${response.body}");
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['status']) {
