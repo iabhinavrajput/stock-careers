@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:stock_careers/utils/constants/api_endpoints.dart';
 import '../../../utils/constants/colors.dart';
 
 class EbookDetailScreen extends StatefulWidget {
@@ -31,7 +32,7 @@ class _EbookDetailScreenState extends State<EbookDetailScreen> {
 
   Future<void> fetchEbookDetails() async {
     final token = await _storage.read(key: 'access_token');
-    final url = 'https://stockcareers.com/api/ebook_by_id/${widget.ebookId}';
+    final url = '${ApiEndpoints.ebookById}/${widget.ebookId}';
 
     try {
       final response = await http.get(
