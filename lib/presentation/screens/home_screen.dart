@@ -19,14 +19,19 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     // Navigate to different screens based on the index
-    if (index == 1) { // If the Courses tab is tapped
+    if (index == 1) {
+      // If the Courses tab is tapped
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const CourseScreen()), // Navigate to the CourseScreen
+        MaterialPageRoute(
+            builder: (context) =>
+                const CourseScreen()), // Navigate to the CourseScreen
       );
-    } else if (index == 2) { // If the Profile tab is tapped
+    } else if (index == 2) {
+      // If the Profile tab is tapped
       // Handle navigation to the Profile screen
-      Navigator.pushNamed(context, '/profile'); // Replace with your profile route
+      Navigator.pushNamed(
+          context, '/profile'); // Replace with your profile route
     }
     // You can handle other navigation logic for the Home and Profile tabs similarly
   }
@@ -92,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -163,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
-          color: AppColors.cardBackground,
+          color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
@@ -182,9 +187,12 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () => _onTabTapped(index),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
-                  color: isSelected ? AppColors.primary.withOpacity(0.1) : Colors.transparent,
+                  color: isSelected
+                      ? AppColors.primary.withOpacity(0.1)
+                      : Colors.transparent,
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Column(
@@ -200,7 +208,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(
                         fontSize: 12,
                         color: isSelected ? AppColors.primary : AppColors.hint,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                        fontWeight:
+                            isSelected ? FontWeight.bold : FontWeight.normal,
                       ),
                     )
                   ],
