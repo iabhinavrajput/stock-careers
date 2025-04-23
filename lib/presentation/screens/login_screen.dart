@@ -1,14 +1,18 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_careers/blocs/auth/auth_bloc.dart';
 import 'package:stock_careers/blocs/auth/auth_event.dart';
 import 'package:stock_careers/blocs/auth/auth_state.dart';
+import 'package:stock_careers/presentation/screens/auth/forget_password.dart';
 import 'package:stock_careers/presentation/widgets/input_field.dart';
 import 'package:stock_careers/routes/app_routes.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:stock_careers/utils/constants/dimensions.dart';
 import 'package:stock_careers/utils/helpers/snackbar_helper.dart';
 
+import '../../blocs/auth/forget_password/forgot_password_bloc.dart';
+import '../../data/services/auth_service.dart';
 import '../widgets/field/email.dart';
 import '../widgets/field/password.dart';
 
@@ -25,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   bool isEmailValid = false;
   bool isPasswordValid = false;
+// or your custom Dio instance
+  final authService = AuthService(Dio());
 
   bool get isFormValid =>
       emailController.text.trim().isNotEmpty &&
@@ -158,8 +164,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, AppRoutes.forgetPassword);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => BlocProvider(
+                                      create: (context) =>
+                                          ForgotPasswordBloc(authService),
+                                      child: ForgotPasswordScreen(),
+                                    ),
+                                  ),
+                                );
                               },
                               child: Text(
                                 "Forgot Password?",

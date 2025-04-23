@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_careers/data/services/auth_service.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
@@ -126,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: AppColors.textGrey),
                       onPressed: () async {
                         // Logout action
-                        final authService = AuthService();
+                        final authService = AuthService(Dio());
                         await authService.logout();
 
                         // Navigate to login screen and remove all previous routes
