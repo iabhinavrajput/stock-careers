@@ -24,20 +24,21 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     // Navigate to different screens based on the index
-    if (index == 1) { 
+    if (index == 1) {
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) =>
                 const CourseScreen()), // Navigate to the CourseScreen
       );
-    } else if(index == 2) {
+    } else if (index == 2) {
       Navigator.pushNamed(context, '/blog'); // Replace with your blog route
-    } else if (index == 3) { // If the E-Books tab is tapped
+    } else if (index == 3) {
+      // If the E-Books tab is tapped
       // Handle navigation to the E-Books screen
       Navigator.pushNamed(context, '/ebook'); // Replace with your e-books route
-    }
-    else if (index == 4) { // If the Profile tab is tapped
+    } else if (index == 4) {
+      // If the Profile tab is tapped
       // Handle navigation to the Profile screen
       Navigator.pushNamed(
           context, '/profile'); // Replace with your profile route
@@ -79,7 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
     if (token != null) {
       final decodedToken = Jwt.parseJwt(token); // Decode the JWT token
       setState(() {
-        username = decodedToken['username'] ?? 'Guest'; // Fetch the username or use 'Guest'
+        username = decodedToken['username'] ??
+            'Guest'; // Fetch the username or use 'Guest'
       });
     }
   }
@@ -171,13 +173,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: Column(
                 children: [
-                  const Text(
+                  Text(
                     "Categories",
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                   const SizedBox(height: 20),
                   // Add your course cards here
@@ -190,42 +188,38 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           children: [
                             const Image(
-                              image: AssetImage('assets/images/Market_Analysis.png'),
+                              image: AssetImage(
+                                  'assets/images/Market_Analysis.png'),
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            const Text(
+                            Text(
                               "Market\nAnalysis",
-                              style: TextStyle(
-                                color: AppColors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.labelMedium,
                             ),
                           ],
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, '/blog'); // Replace with your blog route
+                          Navigator.pushNamed(
+                              context, '/blog'); // Replace with your blog route
                         },
                         child: Column(
                           children: [
                             const Image(
-                              image: AssetImage('assets/images/Informative_Blogs.png'),
+                              image: AssetImage(
+                                  'assets/images/Informative_Blogs.png'),
                             ),
                             SizedBox(
                               height: 10,
-
                             ),
-                            const Text(
+                            Text(
                               "Informative\nBlogs",
-                              style: TextStyle(
-                                color: AppColors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.labelMedium,
                             ),
                           ],
                         ),
@@ -235,18 +229,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           children: [
                             const Image(
-                              image: AssetImage('assets/images/Webinar_Sessions.png'),
+                              image: AssetImage(
+                                  'assets/images/Webinar_Sessions.png'),
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            const Text(
+                            Text(
                               "Webinar\nSessions",
-                              style: TextStyle(
-                                color: AppColors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.labelMedium,
                             ),
                           ],
                         ),
@@ -256,18 +248,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           children: [
                             const Image(
-                              image: AssetImage('assets/images/Online_Classes.png'),
+                              image: AssetImage(
+                                  'assets/images/Online_Classes.png'),
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            const Text(
+                            Text(
                               "Online\nClasses",
-                              style: TextStyle(
-                                color: AppColors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.labelMedium,
                             ),
                           ],
                         ),

@@ -38,19 +38,15 @@ class _CourseScreenState extends State<CourseScreen> {
         appBar: AppBar(
           toolbarHeight: 85,
           automaticallyImplyLeading: false,
-          backgroundColor: AppColors.background,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           flexibleSpace: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   "Courses",
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Image.asset(
                   'assets/images/avatar.png',
@@ -61,7 +57,7 @@ class _CourseScreenState extends State<CourseScreen> {
             ),
           ),
         ),
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: BlocBuilder<CourseBloc, CourseState>(
           builder: (context, state) {
             if (state is CourseLoading) {
@@ -169,8 +165,17 @@ class _CourseScreenState extends State<CourseScreen> {
                       child: Container(
                         height: 150,
                         decoration: BoxDecoration(
-                          color: AppColors.cardBackground,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.cardBackground
+                              : Colors.white,
                           borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.08),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                            ),
+                          ],
                         ),
                         child: Row(
                           children: [
@@ -192,8 +197,12 @@ class _CourseScreenState extends State<CourseScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(course.courseName,
-                                        style: const TextStyle(
-                                            color: AppColors.white,
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.dark
+                                                    ? Colors.white
+                                                    : Colors.black,
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 6),
