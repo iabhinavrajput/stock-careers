@@ -16,10 +16,35 @@ class EbookDetailScreen extends StatefulWidget {
 }
 
 class _EbookDetailScreenState extends State<EbookDetailScreen> {
+  late PDFViewController pdfViewController;
+  int currentPage = 0;
+  int totalPages = 0;
+  double zoomLevel = 1.0; // Initial zoom level
+
   @override
   void initState() {
     super.initState();
     context.read<EbookDetailBloc>().add(FetchEbookDetail(widget.ebookId));
+  }
+
+  void jumpToPage(int page) {
+    pdfViewController.setPage(page);
+  }
+
+  void zoomIn() {
+    setState(() {
+      if (zoomLevel < 3.0) {
+        zoomLevel += 0.5; // Increase zoom level
+      }
+    });
+  }
+
+  void zoomOut() {
+    setState(() {
+      if (zoomLevel > 1.0) {
+        zoomLevel -= 0.5; // Decrease zoom level
+      }
+    });
   }
 
   @override
@@ -59,12 +84,57 @@ class _EbookDetailScreenState extends State<EbookDetailScreen> {
             return Column(
               children: [
                 Expanded(
-                  child: PDFView(
-                    filePath: state.localPdfPath,
-                    enableSwipe: true,
-                    swipeHorizontal: false,
-                    autoSpacing: false,
-                    pageFling: true,
+                  child: Transform.scale(
+                    scale: zoomLevel, // Apply zoom effect by scaling the container
+                    child: PDFView(
+                      filePath: state.localPdfPath,
+                      enableSwipe: true, // Enable swipe gestures
+                      swipeHorizontal: true, // Disable horizontal swipe
+                      autoSpacing: true, // Enable auto-spacing between pages
+                      pageFling: true, // Enable page fling effect
+                      nightMode: false, // Disable night mode
+                      fitPolicy: FitPolicy.WIDTH, // Fit PDF to width
+                      onRender: (pages) {
+                        setState(() {
+                          totalPages = pages!;
+                        });
+                      },
+                      onPageChanged: (page, total) {
+                        setState(() {
+                          currentPage = page!;
+                        });
+                      },
+                      onViewCreated: (controller) {
+                        pdfViewController = controller;
+                      },
+                      onError: (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Error: $error')),
+                        );
+                      },
+                      onPageError: (page, error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Error on page $page: $error')),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.zoom_in),
+                        onPressed: zoomIn,
+                      ),
+                      Text("Page ${currentPage + 1} of $totalPages"),
+                      IconButton(
+                        icon: Icon(Icons.zoom_out),
+                        onPressed: zoomOut,
+                      ),
+                    ],
                   ),
                 ),
               ],
