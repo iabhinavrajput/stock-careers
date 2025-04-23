@@ -51,6 +51,7 @@ dependencies:
   flutter_html: ^3.0.0
   flutter_pdfview: ^1.4.0+1
   syncfusion_flutter_pdfviewer: ^29.1.39
+  jwt_decode: ^0.3.1
 
 dev_dependencies:
   flutter_test:
