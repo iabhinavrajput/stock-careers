@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'course_screen.dart'; // Import your CourseScreen here
 
 class HomeScreen extends StatefulWidget {
@@ -12,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+  String username = "Loading..."; // Default value for username
 
   void _onTabTapped(int index) {
     setState(() {
@@ -34,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
       // Handle navigation to the Profile screen
       Navigator.pushNamed(context, '/profile'); // Replace with your profile route
     }
-    // You can handle other navigation logic for the Home and Profile tabs similarly
   }
 
   List<IconData> icons = [
@@ -61,6 +63,23 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _getUsernameFromToken();
+  }
+
+  Future<void> _getUsernameFromToken() async {
+    final storage = const FlutterSecureStorage();
+    final token = await storage.read(key: 'access_token');
+    if (token != null) {
+      final decodedToken = Jwt.parseJwt(token); // Decode the JWT token
+      setState(() {
+        username = decodedToken['username'] ?? 'Guest'; // Fetch the username or use 'Guest'
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -75,9 +94,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Hi, Kristin",
-                    style: TextStyle(
+                  Text(
+                    "Hi, $username", // Display the dynamic username
+                    style: const TextStyle(
                       color: AppColors.white,
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
