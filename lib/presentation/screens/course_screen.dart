@@ -5,6 +5,7 @@ import 'package:stock_careers/blocs/course/course_bloc.dart';
 import 'package:stock_careers/blocs/course/course_event.dart';
 import 'package:stock_careers/blocs/course/course_state.dart';
 import 'package:stock_careers/presentation/screens/course_detail_screen.dart';
+import 'package:stock_careers/presentation/widgets/bottom_nav_bar.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 
 class CourseScreen extends StatefulWidget {
@@ -80,7 +81,6 @@ class _CourseScreenState extends State<CourseScreen> {
                         ),
                         child: Row(
                           children: [
-                            // Image placeholder
                             Container(
                               width: 100,
                               height: 120,
@@ -90,7 +90,6 @@ class _CourseScreenState extends State<CourseScreen> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                             ),
-                            // Text placeholders
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -232,6 +231,21 @@ class _CourseScreenState extends State<CourseScreen> {
             }
           },
         ),
+        bottomNavigationBar: BottomNavBar(
+          currentIndex: 1, // Set the current index appropriately
+          onTabTapped: (index) {
+            // Handle tab tap
+            if (index == 0) {
+              Navigator.pushNamed(context, '/home');
+            } else if (index == 2) {
+              Navigator.pushNamed(context, '/blog');
+            } else if (index == 3) {
+              Navigator.pushNamed(context, '/ebook');
+            } else if (index == 4) {
+              Navigator.pushNamed(context, '/profile');
+            }
+          },
+        ), // Added BottomNavBar here
       ),
     );
   }

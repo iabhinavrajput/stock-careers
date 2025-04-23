@@ -6,6 +6,8 @@ import 'package:stock_careers/blocs/ebook/ebook_event.dart';
 import 'package:stock_careers/blocs/ebook/ebook_state.dart';
 import '../../../data/services/ebook_service.dart';
 import '../../../utils/constants/colors.dart';
+import 'package:stock_careers/presentation/widgets/bottom_nav_bar.dart'; // ✅ Import BottomNavBar
+
 
 class EbookScreen extends StatefulWidget {
   const EbookScreen({super.key});
@@ -226,6 +228,21 @@ class _EbookScreenState extends State<EbookScreen> {
               return Center(child: Text(state.message));
             }
             return const SizedBox.shrink();
+          },
+        ),
+        bottomNavigationBar: BottomNavBar(
+          currentIndex: 3, // Set the current index for the active tab
+          onTabTapped: (index) {
+            // Handle tab navigation logic here
+            if (index == 0) {
+              Navigator.pushNamed(context, '/home');
+            } else if (index == 1) {
+              Navigator.pushNamed(context, '/course');
+            } else if (index == 2) {
+              Navigator.pushNamed(context, '/blog');
+            } else if (index == 4) {
+              Navigator.pushNamed(context, '/profile');
+            }
           },
         ),
       ),

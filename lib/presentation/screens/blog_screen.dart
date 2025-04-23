@@ -6,6 +6,7 @@ import 'package:stock_careers/blocs/blog/blog_event.dart';
 import 'package:stock_careers/blocs/blog/blog_state.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:stock_careers/data/services/blog_service.dart';
+import 'package:stock_careers/presentation/widgets/bottom_nav_bar.dart'; // ✅ Import BottomNavBar
 
 class BlogScreen extends StatefulWidget {
   const BlogScreen({super.key});
@@ -161,16 +162,16 @@ class _BlogScreenState extends State<BlogScreen> {
                       ),
                       child: Row(
                         children: [
-                           Container(
-                              padding: const EdgeInsets.all(8),
-                              margin: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: AppColors.cardBackgroundLight,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Image.network(blog.blogImage,
-                                  width: 80, height: 100, fit: BoxFit.cover),
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            margin: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.cardBackgroundLight,
+                              borderRadius: BorderRadius.circular(15),
                             ),
+                            child: Image.network(blog.blogImage,
+                                width: 80, height: 100, fit: BoxFit.cover),
+                          ),
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -204,13 +205,14 @@ class _BlogScreenState extends State<BlogScreen> {
                                         arguments: blog.id,
                                       );
                                     },
-                                    child: const Text("Read More", 
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                      color: AppColors.lightPrimary,
-                                      fontSize: 14,
-                                    
-                                    ),),
+                                    child: const Text(
+                                      "Read More",
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        color: AppColors.lightPrimary,
+                                        fontSize: 14,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -228,6 +230,21 @@ class _BlogScreenState extends State<BlogScreen> {
             return const SizedBox.shrink();
           },
         ),
+        bottomNavigationBar: BottomNavBar(
+          currentIndex: 2, // Set the current index for the active tab
+          onTabTapped: (index) {
+            // Handle tab navigation logic here
+            if (index == 0) {
+              Navigator.pushNamed(context, '/home');
+            } else if (index == 1) {
+              Navigator.pushNamed(context, '/course');
+            }  else if (index == 3) {
+              Navigator.pushNamed(context, '/ebook');
+            } else if (index == 4) {
+              Navigator.pushNamed(context, '/profile');
+            }
+          },
+        ), // ✅ BottomNavBar added here
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:stock_careers/data/services/auth_service.dart';
+import 'package:stock_careers/presentation/widgets/bottom_nav_bar.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
@@ -45,8 +46,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
+            children: const [
+              Text(
                 "Account",
                 style: TextStyle(
                   color: AppColors.white,
@@ -63,49 +64,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              // Avatar with border and rounded corners
               Image.asset(
                 'assets/images/avatar.png',
                 height: 100,
                 width: 100,
               ),
-              // CircleAvatar(
-              //   radius: 50,
-              //   backgroundImage: AssetImage('assets/images/avatar.png'),
-              //   backgroundColor: AppColors.background,
-              // ),
               const SizedBox(height: 20),
-
-              // User details section without container
               Column(
                 children: [
-                  // Username
                   Text(
                     '${decodedToken?['username'] ?? 'N/A'}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppColors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 10),
-                  
-                  // Email
                   Text(
                     '${decodedToken?['email'] ?? 'N/A'}',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppColors.white,
                       fontSize: 16,
                     ),
                   ),
                   const SizedBox(height: 10),
-                  
-                  // Phone (optional)
-                  if (decodedToken?['phone'] != null && decodedToken!['phone'].isNotEmpty) 
+                  if (decodedToken?['phone'] != null &&
+                      decodedToken!['phone'].isNotEmpty)
                     Text(
                       '${decodedToken!['phone']}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppColors.white,
                         fontSize: 16,
                       ),
@@ -113,87 +102,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               const SizedBox(height: 20),
-
-              // Additional settings options
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Favourite Courses",
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.chevron_right, color: AppColors.textGrey),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Edit Account",
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.chevron_right, color: AppColors.textGrey),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Settings and Privacy",
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.chevron_right, color: AppColors.textGrey),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Logout",
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.chevron_right, color: AppColors.textGrey),
-                          onPressed: () async {
-                            // Logout action
-                            final authService = AuthService();
-                            await authService.logout();
-
-                            // Navigate to login screen and remove all previous routes
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                '/login', (route) => false);
-                          },
-                        ),
-                      ],
-                    ),
+                    _buildRow("Favourite Courses", () {}),
+                    _buildRow("Edit Account", () {}),
+                    _buildRow("Settings and Privacy", () {}),
+                    _buildRow("Logout", () async {
+                      final authService = AuthService();
+                      await authService.logout();
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil('/login', (route) => false);
+                    }),
                   ],
                 ),
               ),
@@ -201,6 +122,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: 4, // Set the current index for the active tab
+        onTabTapped: (index) {
+          // Handle tab navigation logic here
+          if (index == 0) {
+            Navigator.pushNamed(context, '/home');
+          } else if (index == 1) {
+            Navigator.pushNamed(context, '/course');
+          } else if (index == 2) {
+            Navigator.pushNamed(context, '/blog');
+          } else if (index == 3) {
+            Navigator.pushNamed(context, '/ebook');
+          } 
+        },
+      ),
+    );
+  }
+
+  Widget _buildRow(String title, VoidCallback onTap) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            color: AppColors.white,
+            fontSize: 16,
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.chevron_right, color: AppColors.textGrey),
+          onPressed: onTap,
+        ),
+      ],
     );
   }
 }
