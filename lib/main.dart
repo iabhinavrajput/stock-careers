@@ -7,6 +7,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stock_careers/blocs/auth/forget_password/forgot_password_bloc.dart';
+import 'package:stock_careers/blocs/course/course_bloc.dart';
+import 'package:stock_careers/data/services/course_service.dart';
 import 'blocs/auth/auth_bloc.dart';
 import 'data/services/auth_service.dart';
 import 'routes/app_routes.dart';
@@ -35,6 +37,9 @@ void main() async {
             create: (context) => ForgotPasswordBloc(AuthService(
                 Dio()))), // Add ForgotPasswordBloc provider
         // 👈 This line is missing in your code
+        BlocProvider(create: (context) => AuthBloc(AuthService(Dio()))),
+        BlocProvider(create: (context) => ThemeCubit()),
+        BlocProvider(create: (context) => CourseBloc(CourseService())),
       ],
       child: MyApp(isLoggedIn: token != null),
     ),

@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:stock_careers/blocs/course/course_bloc.dart';
-import 'package:stock_careers/blocs/course/course_event.dart';
-import 'package:stock_careers/blocs/course/course_state.dart';
-import 'package:stock_careers/presentation/screens/course_detail_screen.dart';
+import 'package:stock_careers/blocs/blog/blog_bloc.dart';
+import 'package:stock_careers/blocs/blog/blog_event.dart';
+import 'package:stock_careers/blocs/blog/blog_state.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
+import 'package:stock_careers/data/services/blog_service.dart';
 
-class CourseScreen extends StatefulWidget {
-  const CourseScreen({super.key});
+class BlogScreen extends StatefulWidget {
+  const BlogScreen({super.key});
 
   @override
-  State<CourseScreen> createState() => _CourseScreenState();
+  State<BlogScreen> createState() => _BlogScreenState();
 }
 
-class _CourseScreenState extends State<CourseScreen> {
+class _BlogScreenState extends State<BlogScreen> {
+  late BlogBloc _blogBloc;
+
   @override
   void initState() {
     super.initState();
-    context.read<CourseBloc>().add(LoadCourses());
-    print("Course Screen Loaded");
+    _blogBloc = BlogBloc(BlogService())..add(FetchBlogsEvent());
+  }
+
+  @override
+  void dispose() {
+    _blogBloc.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CourseBloc, CourseState>(
-      listener: (context, state) {
-        if (state is CourseLoaded) {
-          print("Courses loaded: ${state.courses.length}");
-        } else if (state is CourseError) {
-          print("Error: ${state.message}");
-        }
-      },
+    return BlocProvider(
+      create: (_) => _blogBloc,
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 85,
@@ -43,7 +44,7 @@ class _CourseScreenState extends State<CourseScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  "Courses",
+                  "Blog",
                   style: TextStyle(
                     color: AppColors.white,
                     fontSize: 32,
@@ -60,12 +61,12 @@ class _CourseScreenState extends State<CourseScreen> {
           ),
         ),
         backgroundColor: AppColors.background,
-        body: BlocBuilder<CourseBloc, CourseState>(
+        body: BlocBuilder<BlogBloc, BlogState>(
           builder: (context, state) {
-            if (state is CourseLoading) {
+            if (state is BlogLoading) {
               return ListView.builder(
                 padding: const EdgeInsets.all(16),
-                itemCount: 6,
+                itemCount: 5,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
@@ -80,7 +81,6 @@ class _CourseScreenState extends State<CourseScreen> {
                         ),
                         child: Row(
                           children: [
-                            // Image placeholder
                             Container(
                               width: 100,
                               height: 120,
@@ -90,7 +90,6 @@ class _CourseScreenState extends State<CourseScreen> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                             ),
-                            // Text placeholders
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -146,90 +145,87 @@ class _CourseScreenState extends State<CourseScreen> {
                   );
                 },
               );
-            } else if (state is CourseLoaded) {
+            } else if (state is BlogLoaded) {
               return ListView.builder(
                 padding: const EdgeInsets.all(16),
-                itemCount: state.courses.length,
+                itemCount: state.blogs.length,
                 itemBuilder: (context, index) {
-                  final course = state.courses[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              CourseDetailScreen(courseId: course.id),
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: AppColors.cardBackground,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
+                  final blog = state.blogs[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Container(
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: AppColors.cardBackground,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                           Container(
                               padding: const EdgeInsets.all(8),
                               margin: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 color: AppColors.cardBackgroundLight,
                                 borderRadius: BorderRadius.circular(15),
                               ),
-                              child: Image.network(course.courseImage,
-                                  width: 80, height: 100, fit: BoxFit.fitWidth),
+                              child: Image.network(blog.blogImage,
+                                  width: 80, height: 100, fit: BoxFit.cover),
                             ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(course.courseName,
-                                        style: const TextStyle(
-                                            color: AppColors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold)),
-                                    const SizedBox(height: 6),
-                                    Text(course.categoryName,
-                                        style: const TextStyle(
-                                            color: AppColors.hint,
-                                            fontSize: 14)),
-                                    const SizedBox(height: 6),
-                                    Row(
-                                      children: [
-                                        Text(
-                                            "Price: ${course.price.isEmpty ? 'Free' : course.price}",
-                                            style: const TextStyle(
-                                                color: AppColors.primary,
-                                                fontWeight: FontWeight.bold)),
-                                        const SizedBox(width: 10),
-                                        Text(course.duration,
-                                            style: const TextStyle(
-                                                color: Colors.red,
-                                                fontSize: 12)),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    blog.blogName,
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    blog.blogDesc,
+                                    style: const TextStyle(
+                                        fontSize: 14, color: Colors.white70),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        '/blogDetail',
+                                        arguments: blog.id,
+                                      );
+                                    },
+                                    child: const Text("Read More", 
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      color: AppColors.lightPrimary,
+                                      fontSize: 14,
+                                    
+                                    ),),
+                                  ),
+                                ],
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   );
                 },
               );
-            } else if (state is CourseError) {
+            } else if (state is BlogError) {
               return Center(child: Text(state.message));
-            } else {
-              return const SizedBox.shrink();
             }
+            return const SizedBox.shrink();
           },
         ),
       ),

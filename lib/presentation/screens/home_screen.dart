@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'course_screen.dart'; // Import your CourseScreen here
 
 class HomeScreen extends StatefulWidget {
@@ -12,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+  String username = "Loading..."; // Default value for username
 
   void _onTabTapped(int index) {
     setState(() {
@@ -19,27 +22,36 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     // Navigate to different screens based on the index
-    if (index == 1) { // If the Courses tab is tapped
+    if (index == 1) { 
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const CourseScreen()), // Navigate to the CourseScreen
       );
-    } else if (index == 2) { // If the Profile tab is tapped
+    } else if(index == 2) {
+      Navigator.pushNamed(context, '/blog'); // Replace with your blog route
+    } else if (index == 3) { // If the E-Books tab is tapped
+      // Handle navigation to the E-Books screen
+      Navigator.pushNamed(context, '/ebook'); // Replace with your e-books route
+    }
+    else if (index == 4) { // If the Profile tab is tapped
       // Handle navigation to the Profile screen
       Navigator.pushNamed(context, '/profile'); // Replace with your profile route
     }
-    // You can handle other navigation logic for the Home and Profile tabs similarly
   }
 
   List<IconData> icons = [
     Icons.home,
     Icons.school,
+    Icons.article,
+    Icons.book,
     Icons.person,
   ];
 
   List<String> labels = [
     'Home',
     'Courses',
+    'Blog',
+    'E-Books',
     'Profile',
   ];
 
@@ -49,6 +61,23 @@ class _HomeScreenState extends State<HomeScreen> {
     'https://foundr.com/wp-content/uploads/2023/04/How-to-create-an-online-course.jpg.webp',
     'https://blogassets.leverageedu.com/blog/wp-content/uploads/2020/05/23151218/BA-Courses.png',
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _getUsernameFromToken();
+  }
+
+  Future<void> _getUsernameFromToken() async {
+    final storage = const FlutterSecureStorage();
+    final token = await storage.read(key: 'access_token');
+    if (token != null) {
+      final decodedToken = Jwt.parseJwt(token); // Decode the JWT token
+      setState(() {
+        username = decodedToken['username'] ?? 'Guest'; // Fetch the username or use 'Guest'
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +94,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Hi, Kristin",
-                    style: TextStyle(
+                  Text(
+                    "Hi, $username", // Display the dynamic username
+                    style: const TextStyle(
                       color: AppColors.white,
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -95,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.background,
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Image Slider
             Padding(
@@ -141,18 +171,110 @@ class _HomeScreenState extends State<HomeScreen> {
                 vertical: 20,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    "Courses",
+                children: [
+                  const Text(
+                    "Categories",
                     style: TextStyle(
                       color: AppColors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   // Add your course cards here
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {},
+                        child: Column(
+                          children: [
+                            const Image(
+                              image: AssetImage('assets/images/Market_Analysis.png'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              "Market\nAnalysis",
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/blog'); // Replace with your blog route
+                        },
+                        child: Column(
+                          children: [
+                            const Image(
+                              image: AssetImage('assets/images/Informative_Blogs.png'),
+                            ),
+                            SizedBox(
+                              height: 10,
+
+                            ),
+                            const Text(
+                              "Informative\nBlogs",
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Column(
+                          children: [
+                            const Image(
+                              image: AssetImage('assets/images/Webinar_Sessions.png'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              "Webinar\nSessions",
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Column(
+                          children: [
+                            const Image(
+                              image: AssetImage('assets/images/Online_Classes.png'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              "Online\nClasses",
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
