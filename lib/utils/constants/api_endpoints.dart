@@ -7,6 +7,8 @@ class ApiEndpoints {
   static const String courseById = '$baseUrl/course_by_id'; 
   static const String blog = '$baseUrl/blog';
   static const String blogById = '$baseUrl/blog_by_id';
+  static const String ebook = '$baseUrl/ebooks'; 
+  static const String ebookById = '$baseUrl/ebook_by_id';
   static const String fetchUserData = '$baseUrl/user/data';
   static const String updateUserProfile = '$baseUrl/user/update';
   static const String fetchPosts = '$baseUrl/posts';

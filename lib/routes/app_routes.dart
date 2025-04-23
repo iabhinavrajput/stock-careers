@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stock_careers/blocs/ebook/ebook_detail_bloc.dart';
+import 'package:stock_careers/blocs/ebook/ebook_detail_event.dart';
 import 'package:stock_careers/presentation/screens/auth/forget_password.dart';
 import 'package:stock_careers/presentation/screens/blog_detail_screen.dart';
 import 'package:stock_careers/presentation/screens/blog_screen.dart';
@@ -60,11 +63,14 @@ class AppRoutes {
         );
       case ebook:
         return MaterialPageRoute(builder: (_) => const EbookScreen());
-      case ebookDetail :
+      case ebookDetail:
         final args = settings.arguments;
         if (args is String) {
           return MaterialPageRoute(
-            builder: (_) => EbookDetailScreen(ebookId: args),
+            builder: (_) => BlocProvider(
+              create: (_) => EbookDetailBloc()..add(FetchEbookDetail(args)),
+              child: EbookDetailScreen(ebookId: args),
+            ),
           );
         }
         return MaterialPageRoute(
@@ -72,6 +78,7 @@ class AppRoutes {
             body: Center(child: Text('No ebook ID provided')),
           ),
         );
+
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(

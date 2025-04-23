@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:stock_careers/data/services/auth_service.dart';
+import 'package:stock_careers/presentation/widgets/bottom_nav_bar.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
@@ -64,15 +65,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              // Avatar
               Image.asset(
                 'assets/images/avatar.png',
                 height: 100,
                 width: 100,
               ),
               const SizedBox(height: 20),
-
-              // User Info
               Column(
                 children: [
                   Text(
@@ -105,28 +103,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               const SizedBox(height: 20),
-
-              // Options
-              Column(
-                children: [
-                  _buildOptionRow("Favourite Courses", () {}),
-                  const SizedBox(height: 8),
-                  _buildOptionRow("Edit Account", () {}),
-                  const SizedBox(height: 8),
-                  _buildOptionRow("Settings and Privacy", () {}),
-                  const SizedBox(height: 8),
-                  _buildOptionRow("Logout", () async {
-                    final authService = AuthService(Dio());
-                    await authService.logout();
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/login', (route) => false);
-                  }),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Column(
+                  children: [
+                    _buildRow("Favourite Courses", () {}),
+                    _buildRow("Edit Account", () {}),
+                    _buildRow("Settings and Privacy", () {}),
+                    _buildRow("Logout", () async {
+                      final authService = AuthService(Dio());
+                      await authService.logout();
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil('/login', (route) => false);
+                    }),
+                  ],
+                ),
               ),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: 4, // Set the current index for the active tab
+        onTabTapped: (index) {
+          // Handle tab navigation logic here
+          if (index == 0) {
+            Navigator.pushNamed(context, '/home');
+          } else if (index == 1) {
+            Navigator.pushNamed(context, '/course');
+          } else if (index == 2) {
+            Navigator.pushNamed(context, '/blog');
+          } else if (index == 3) {
+            Navigator.pushNamed(context, '/ebook');
+          } 
+        },
+      ),
+    );
+  }
+
+  Widget _buildRow(String title, VoidCallback onTap) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            color: AppColors.white,
+            fontSize: 16,
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.chevron_right, color: AppColors.textGrey),
+          onPressed: onTap,
+        ),
+      ],
     );
   }
 

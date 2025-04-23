@@ -1,10 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
+import 'package:stock_careers/blocs/ebook/ebook_detail_bloc.dart';
+import 'package:stock_careers/blocs/ebook/ebook_detail_event.dart';
+import 'package:stock_careers/blocs/ebook/ebook_detail_state.dart';
 import '../../../utils/constants/colors.dart';
 
 class EbookDetailScreen extends StatefulWidget {
@@ -17,92 +16,136 @@ class EbookDetailScreen extends StatefulWidget {
 }
 
 class _EbookDetailScreenState extends State<EbookDetailScreen> {
-  final _storage = const FlutterSecureStorage();
-  bool loading = true;
-  String? name;
-  String? desc;
-  String? localPdfPath;
+  late PDFViewController pdfViewController;
+  int currentPage = 0;
+  int totalPages = 0;
+  double zoomLevel = 1.0; // Initial zoom level
 
   @override
   void initState() {
     super.initState();
-    fetchEbookDetails();
+    context.read<EbookDetailBloc>().add(FetchEbookDetail(widget.ebookId));
   }
 
-  Future<void> fetchEbookDetails() async {
-    final token = await _storage.read(key: 'access_token');
-    final url = 'https://stockcareers.com/api/ebook_by_id/${widget.ebookId}';
+  void jumpToPage(int page) {
+    pdfViewController.setPage(page);
+  }
 
-    try {
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {'Authorization': token ?? ''},
-      );
-
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-        final ebookData = responseData['data'];
-
-        name = ebookData['ebook_name'];
-        desc = ebookData['ebook_desc'];
-        final pdfUrl = ebookData['ebook_pdf'];
-
-        final path = await downloadAndSavePdf(pdfUrl);
-        setState(() {
-          localPdfPath = path;
-          loading = false;
-        });
-      } else {
-        throw Exception('Failed to fetch ebook details');
+  void zoomIn() {
+    setState(() {
+      if (zoomLevel < 3.0) {
+        zoomLevel += 0.5; // Increase zoom level
       }
-    } catch (e) {
-      setState(() => loading = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
-    }
+    });
   }
 
-  Future<String> downloadAndSavePdf(String url) async {
-    final response = await http.get(Uri.parse(url));
-    final bytes = response.bodyBytes;
-
-    final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/ebook_${widget.ebookId}.pdf');
-
-    await file.writeAsBytes(bytes);
-    return file.path;
+  void zoomOut() {
+    setState(() {
+      if (zoomLevel > 1.0) {
+        zoomLevel -= 0.5; // Decrease zoom level
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name ?? 'Ebook Detail'),
+        toolbarHeight: 85,
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.background,
+        flexibleSpace: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Ebook Pdf",
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Image.asset(
+                'assets/images/avatar.png',
+                height: 50,
+                width: 50,
+              ),
+            ],
+          ),
+        ),
       ),
-      body: loading
-          ? const Center(child: CircularProgressIndicator())
-          : localPdfPath != null
-              ? Column(
-                  children: [
-                    if (desc != null)
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text(desc!, style: const TextStyle(fontSize: 16)),
-                      ),
-                    Expanded(
-                      child: PDFView(
-                        filePath: localPdfPath!,
-                        enableSwipe: true,
-                        swipeHorizontal: false,
-                        autoSpacing: false,
-                        pageFling: true,
-                      ),
+      body: BlocBuilder<EbookDetailBloc, EbookDetailState>(
+        builder: (context, state) {
+          if (state is EbookDetailLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is EbookDetailLoaded) {
+            return Column(
+              children: [
+                Expanded(
+                  child: Transform.scale(
+                    scale: zoomLevel, // Apply zoom effect by scaling the container
+                    child: PDFView(
+                      filePath: state.localPdfPath,
+                      enableSwipe: true, // Enable swipe gestures
+                      swipeHorizontal: true, // Disable horizontal swipe
+                      autoSpacing: true, // Enable auto-spacing between pages
+                      pageFling: true, // Enable page fling effect
+                      nightMode: false, // Disable night mode
+                      fitPolicy: FitPolicy.WIDTH, // Fit PDF to width
+                      onRender: (pages) {
+                        setState(() {
+                          totalPages = pages!;
+                        });
+                      },
+                      onPageChanged: (page, total) {
+                        setState(() {
+                          currentPage = page!;
+                        });
+                      },
+                      onViewCreated: (controller) {
+                        pdfViewController = controller;
+                      },
+                      onError: (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Error: $error')),
+                        );
+                      },
+                      onPageError: (page, error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Error on page $page: $error')),
+                        );
+                      },
                     ),
-                  ],
-                )
-              : const Center(child: Text('Failed to load PDF')),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.zoom_in),
+                        onPressed: zoomIn,
+                      ),
+                      Text("Page ${currentPage + 1} of $totalPages"),
+                      IconButton(
+                        icon: Icon(Icons.zoom_out),
+                        onPressed: zoomOut,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          } else if (state is EbookDetailError) {
+            return Center(child: Text(state.message));
+          } else {
+            return const SizedBox.shrink();
+          }
+        },
+      ),
     );
   }
 }
