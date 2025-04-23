@@ -1,6 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,16 +27,19 @@ void main() async {
   final token = await storage.read(key: 'access_token');
   print("Token: $token");
 
-  runApp(
-    MultiBlocProvider(
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthBloc(AuthService())),
         BlocProvider(create: (context) => ThemeCubit()),
         BlocProvider(create: (context) => CourseBloc(CourseService())),
       ],
       child: MyApp(isLoggedIn: token != null),
-    ),
-  );
+    ));
+  });
 }
 
 class MyApp extends StatelessWidget {
