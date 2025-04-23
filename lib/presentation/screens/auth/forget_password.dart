@@ -10,6 +10,7 @@ import 'package:stock_careers/utils/constants/dimensions.dart';
 
 import '../../../blocs/auth/forget_password/forgot_password_bloc.dart';
 import '../../../data/services/auth_service.dart';
+import '../../../utils/constants/snackbar_helper.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -50,9 +51,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                 );
               } else if (state is ForgotPasswordError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.message)),
-                );
+                SnackbarHelper.showSnackBar(context, state.message);
               }
             },
             builder: (context, state) {
