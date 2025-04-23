@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:stock_careers/utils/constants/dimensions.dart';
+import 'package:stock_careers/utils/constants/textstyle.dart';
 import 'course_screen.dart'; // Import your CourseScreen here
 
 class HomeScreen extends StatefulWidget {
@@ -57,6 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Dimensions.init(context); // initialize screen dimensions
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 180,
@@ -102,16 +106,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             // Image Slider
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: const Text(
-                "Featured Courses",
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            SizedBox(
+              height: Dimensions.pagePadding,
             ),
             CarouselSlider(
               options: CarouselOptions(
@@ -138,28 +134,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ))
                   .toList(),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 20,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    "Courses",
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  // Add your course cards here
-                ],
-              ),
             ),
           ],
         ),
