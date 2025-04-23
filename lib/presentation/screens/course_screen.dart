@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 
+import '../../utils/constants/textstyle.dart';
+
 class CourseScreen extends StatefulWidget {
   const CourseScreen({super.key});
 
@@ -11,11 +13,13 @@ class CourseScreen extends StatefulWidget {
 class _CourseScreenState extends State<CourseScreen> {
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-       appBar: AppBar(
+      appBar: AppBar(
         toolbarHeight: 85,
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.primary,
         flexibleSpace: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
           child: Column(
@@ -44,18 +48,31 @@ class _CourseScreenState extends State<CourseScreen> {
           ),
         ),
       ),
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 25, right: 25, top: 20,), 
+          padding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 20,
+          ),
           child: Column(
             children: [
               Container(
                 height: 150,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: AppColors.cardBackground,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.form_bg
+                      : Colors.white,
                   borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      spreadRadius: 1,
+                      blurRadius: 10,
+                    ),
+                  ],
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
@@ -68,22 +85,19 @@ class _CourseScreenState extends State<CourseScreen> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Image.asset(
-                        'assets/images/avatar.png',
-                        height: 100,
-                        width: 100,
+                          'assets/images/avatar.png',
+                          height: 100,
+                          width: 100,
+                        ),
                       ),
-                      ),
-                      
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             "Course Title",
-                            style: TextStyle(
-                              color: AppColors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: isDarkMode
+                                ? AppTextStyles.dark.displayLarge
+                                : AppTextStyles.light.displayLarge,
                           ),
                           const SizedBox(height: 8),
                           const Text(
@@ -95,31 +109,28 @@ class _CourseScreenState extends State<CourseScreen> {
                           ),
                           const SizedBox(height: 8),
                           Row(
-                            
                             children: [
-                                    Text(
-                                  "Price: \$99",
-                                  style: TextStyle(
-                                    color: AppColors.primary,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              Text(
+                                "Price: \$99",
+                                style: TextStyle(
+                                  color: AppColors.primary,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                const SizedBox(width: 20),
-                                Text(
-                                  "4 weeks",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              ),
+                              const SizedBox(width: 20),
+                              Text(
+                                "4 weeks",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
                                 ),
+                              ),
                             ],
                           ),
-                          
                         ],
                       ),
-                      
                     ],
                   ),
                 ),
@@ -136,9 +147,7 @@ class _CourseScreenState extends State<CourseScreen> {
             ],
           ),
         ),
-          
-        ),
-     
+      ),
     );
   }
 }

@@ -36,6 +36,12 @@ class _Light {
         fontWeight: FontWeight.w400,
         fontFamily: 'Poppins',
       );
+
+      TextStyle get displayLarge => TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+        fontFamily: 'Poppins',
+      );
 }
 
 class _Dark {
@@ -59,6 +65,13 @@ class _Dark {
         fontSize: 12,
         fontWeight: FontWeight.w400,
         fontFamily: 'Poppins',
+      );
+
+       TextStyle get displayLarge => TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+        fontFamily: 'Poppins',
+        color: Colors.white
       );
 }
 
