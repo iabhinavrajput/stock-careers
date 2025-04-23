@@ -19,15 +19,18 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     // Navigate to different screens based on the index
-    if (index == 1) { // If the Courses tab is tapped
+    if (index == 1) { 
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const CourseScreen()), // Navigate to the CourseScreen
       );
     } else if(index == 2) {
       Navigator.pushNamed(context, '/blog'); // Replace with your blog route
+    } else if (index == 3) { // If the E-Books tab is tapped
+      // Handle navigation to the E-Books screen
+      Navigator.pushNamed(context, '/ebook'); // Replace with your e-books route
     }
-    else if (index == 3) { // If the Profile tab is tapped
+    else if (index == 4) { // If the Profile tab is tapped
       // Handle navigation to the Profile screen
       Navigator.pushNamed(context, '/profile'); // Replace with your profile route
     }
@@ -38,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Icons.home,
     Icons.school,
     Icons.article,
+    Icons.book,
     Icons.person,
   ];
 
@@ -45,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
     'Home',
     'Courses',
     'Blog',
+    'E-Books',
     'Profile',
   ];
 
