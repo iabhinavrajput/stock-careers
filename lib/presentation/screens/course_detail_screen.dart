@@ -7,7 +7,8 @@ import 'package:stock_careers/data/services/course_service.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_html/flutter_html.dart'; // Import the flutter_html package
-import 'package:html/parser.dart' as html_parser; // Import the html parser package
+import 'package:html/parser.dart'
+    as html_parser; // Import the html parser package
 
 class CourseDetailScreen extends StatefulWidget {
   final String courseId;
@@ -36,7 +37,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final shimmerHeight = screenHeight * 0.3; // Dynamically set shimmer height based on screen height
+    final shimmerHeight = screenHeight *
+        0.3; // Dynamically set shimmer height based on screen height
     final contentHeight = screenHeight * 0.7; // Content area after shimmer
 
     return BlocProvider.value(
@@ -79,13 +81,25 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // Placeholder elements with fixed heights
-                              Container(height: shimmerHeight * 0.1, width: 200, color: Colors.grey),
+                              Container(
+                                  height: shimmerHeight * 0.1,
+                                  width: 200,
+                                  color: Colors.grey),
                               const SizedBox(height: 10),
-                              Container(height: shimmerHeight * 0.1, width: 100, color: Colors.grey),
+                              Container(
+                                  height: shimmerHeight * 0.1,
+                                  width: 100,
+                                  color: Colors.grey),
                               const SizedBox(height: 30),
-                              Container(height: shimmerHeight * 0.2, width: 150, color: Colors.grey),
+                              Container(
+                                  height: shimmerHeight * 0.2,
+                                  width: 150,
+                                  color: Colors.grey),
                               const SizedBox(height: 10),
-                              Container(height: shimmerHeight * 0.2, width: double.infinity, color: Colors.grey),
+                              Container(
+                                  height: shimmerHeight * 0.2,
+                                  width: double.infinity,
+                                  color: Colors.grey),
                             ],
                           ),
                         ),
@@ -107,7 +121,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     top: 0,
                     left: 0,
                     right: 0,
-                    bottom: screenHeight * 0.7, // Dynamically adjust shimmer area
+                    bottom:
+                        screenHeight * 0.7, // Dynamically adjust shimmer area
                     child: course.courseImage.isNotEmpty
                         ? Container(
                             decoration: BoxDecoration(
@@ -118,7 +133,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                             ),
                           )
                         : Container(
-                            color: AppColors.grey, // Show grey color if no image
+                            color:
+                                AppColors.grey, // Show grey color if no image
                           ),
                   ),
                   Positioned(
@@ -127,30 +143,37 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     right: 0,
                     bottom: 0,
                     child: Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.cardBackground,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.cardBackground
+                            : Colors.white,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30),
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
                         child: SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 20),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: Text(
                                       course.courseName,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold,
-                                        color: AppColors.white,
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? Colors.white
+                                            : Colors.black,
                                       ),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
@@ -158,7 +181,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                   ),
                                   const SizedBox(width: 10),
                                   Text(
-                                    course.price.isEmpty ? 'Free' : course.price,
+                                    course.price.isEmpty
+                                        ? 'Free'
+                                        : course.price,
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -176,24 +201,35 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                 ),
                               ),
                               const SizedBox(height: 20),
-                              const Text(
+                              Text(
                                 'Description',
                                 style: TextStyle(
                                   fontSize: 18,
-                                  color: AppColors.white,
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
                               ),
                               const SizedBox(height: 10),
                               // Render the parsed HTML description with custom styles
                               Html(
-                                data: course.longDescription,  // Use the original HTML
+                                data: course
+                                    .longDescription, // Use the original HTML
                                 style: {
                                   // Apply styles to HTML tags
                                   'body': Style(
-                                    color: AppColors.white, // Change body text color
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.white
+                                        : Colors
+                                            .black, // Change body text color
                                   ),
                                   'p': Style(
-                                    color: AppColors.white, // Paragraph text color
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.white
+                                        : Colors.black, // Paragraph text color
                                     fontSize: FontSize(16),
                                   ),
                                   'h1': Style(
@@ -212,13 +248,15 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                     textDecoration: TextDecoration.underline,
                                   ),
                                   'img': Style(
-                                    width: Width(double.infinity), // Ensure image stretches across
-                                    height: Height(250), // Set a fixed height for images
+                                    width: Width(double
+                                        .infinity), // Ensure image stretches across
+                                    height: Height(
+                                        250), // Set a fixed height for images
                                   ),
                                 },
                               ),
                               const SizedBox(height: 40),
-                                
+
                               Container(
                                 alignment: Alignment.bottomCenter,
                                 child: Row(
@@ -230,18 +268,26 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: AppColors.primary,
-                                          padding: const EdgeInsets.symmetric(vertical: 15),
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 15),
                                         ),
                                         child: const Text(
                                           'Enroll Now',
-                                          
-                                          style: TextStyle(fontSize: 18, color: AppColors.white),
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: AppColors.white),
                                         ),
                                       ),
                                     ),
                                     const SizedBox(width: 10),
                                     IconButton(
-                                      icon: const Icon(Icons.share, color: AppColors.white),
+                                      icon:  Icon(
+                                        Icons.share,
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? Colors.white
+                                            : Colors.black,
+                                      ),
                                       onPressed: () {
                                         // Handle share action
                                       },
