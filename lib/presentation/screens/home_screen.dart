@@ -3,6 +3,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:stock_careers/utils/constants/dimensions.dart';
+import 'package:stock_careers/utils/constants/textstyle.dart';
 import 'course_screen.dart'; // Import your CourseScreen here
 
 class HomeScreen extends StatefulWidget {
@@ -25,7 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
     if (index == 1) { 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const CourseScreen()), // Navigate to the CourseScreen
+        MaterialPageRoute(
+            builder: (context) =>
+                const CourseScreen()), // Navigate to the CourseScreen
       );
     } else if(index == 2) {
       Navigator.pushNamed(context, '/blog'); // Replace with your blog route
@@ -35,7 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     else if (index == 4) { // If the Profile tab is tapped
       // Handle navigation to the Profile screen
-      Navigator.pushNamed(context, '/profile'); // Replace with your profile route
+      Navigator.pushNamed(
+          context, '/profile'); // Replace with your profile route
     }
   }
 
@@ -81,6 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Dimensions.init(context); // initialize screen dimensions
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 180,
@@ -121,22 +128,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Image Slider
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: const Text(
-                "Featured Courses",
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            SizedBox(
+              height: Dimensions.pagePadding,
             ),
             CarouselSlider(
               options: CarouselOptions(
@@ -285,7 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
-          color: AppColors.cardBackground,
+          color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
@@ -304,9 +303,12 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () => _onTabTapped(index),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
-                  color: isSelected ? AppColors.primary.withOpacity(0.1) : Colors.transparent,
+                  color: isSelected
+                      ? AppColors.primary.withOpacity(0.1)
+                      : Colors.transparent,
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Column(
@@ -322,7 +324,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(
                         fontSize: 12,
                         color: isSelected ? AppColors.primary : AppColors.hint,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                        fontWeight:
+                            isSelected ? FontWeight.bold : FontWeight.normal,
                       ),
                     )
                   ],

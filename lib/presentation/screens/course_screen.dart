@@ -7,6 +7,8 @@ import 'package:stock_careers/blocs/course/course_state.dart';
 import 'package:stock_careers/presentation/screens/course_detail_screen.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 
+import '../../utils/constants/textstyle.dart';
+
 class CourseScreen extends StatefulWidget {
   const CourseScreen({super.key});
 
