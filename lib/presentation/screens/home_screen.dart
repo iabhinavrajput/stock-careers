@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:stock_careers/utils/constants/dimensions.dart';
+import 'package:stock_careers/utils/constants/textstyle.dart';
+import 'course_screen.dart'; // Import your CourseScreen here
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:stock_careers/Presentation/Widgets/bottom_nav_bar.dart';
@@ -40,6 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Dimensions.init(context); // initialize screen dimensions
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 180,
@@ -80,22 +85,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Slider
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Text(
-                "Featured Courses",
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            // Image Slider
+            SizedBox(
+              height: Dimensions.pagePadding,
             ),
             CarouselSlider(
               options: CarouselOptions(
@@ -133,54 +130,92 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildCategoryItem(
-                    context,
-                    'assets/images/Market_Analysis.png',
-                    "Market\nAnalysis",
-                  ),
-                  _buildCategoryItem(
-                    context,
-                    'assets/images/Informative_Blogs.png',
-                    "Informative\nBlogs",
-                    route: '/blog',
-                  ),
-                  _buildCategoryItem(
-                    context,
-                    'assets/images/Webinar_Sessions.png',
-                    "Webinar\nSessions",
-                  ),
-                  _buildCategoryItem(
-                    context,
-                    'assets/images/Online_Classes.png',
-                    "Online\nClasses",
-                    route: '/course',
-                  ),
-                ],
-              ),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildCategoryItem(
+                          context,
+                          'assets/images/new/market-analysis.png',
+                          "Market\nAnalysis",
+                        ),
+                        _buildCategoryItem(
+                          context,
+                          'assets/images/new/Blog-icon.png',
+                          "Informative\nBlogs",
+                          route: '/blog',
+                        ),
+                        _buildCategoryItem(
+                          context,
+                          'assets/images/new/Webinars-icon.png',
+                          "Webinar\nSessions",
+                        ),
+                        _buildCategoryItem(
+                          context,
+                          'assets/images/new/Online-classes.png',
+                          "Online\nClasses",
+                          route: '/course',
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: Dimensions.pagePadding,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildCategoryItem(
+                          context,
+                          'assets/images/new/Market-analysis-solid-icon.png',
+                          "Market\nAnalysis",
+                        ),
+                        _buildCategoryItem(
+                          context,
+                          'assets/images/new/Blog-solid-icon.png',
+                          "Informative\nBlogs",
+                          route: '/blog',
+                        ),
+                        _buildCategoryItem(
+                          context,
+                          'assets/images/new/Webinar-solid-icon.png',
+                          "Webinar\nSessions",
+                        ),
+                        _buildCategoryItem(
+                          context,
+                          'assets/images/new/Online-classes-solid.png',
+                          "Online\nClasses",
+                          route: '/course',
+                        ),
+                      ],
+                    ),
+                  ]),
             ),
             const SizedBox(height: 80),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(currentIndex: 0, onTabTapped: (int index) { 
-        // Handle tab tap
-         if (index == 1) {
-          Navigator.pushNamed(context, '/course');
-        } else if (index == 2) {
-          Navigator.pushNamed(context, '/blog');
-        } else if (index == 3) {
-          Navigator.pushNamed(context, '/ebook');
-        } else if (index == 4) {
-          Navigator.pushNamed(context, '/profile');
-        }
-       },), // 👈 Using your custom BottomNavBar
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: 0,
+        onTabTapped: (int index) {
+          // Handle tab tap
+          if (index == 1) {
+            Navigator.pushNamed(context, '/course');
+          } else if (index == 2) {
+            Navigator.pushNamed(context, '/blog');
+          } else if (index == 3) {
+            Navigator.pushNamed(context, '/ebook');
+          } else if (index == 4) {
+            Navigator.pushNamed(context, '/profile');
+          }
+        },
+      ), // 👈 Using your custom BottomNavBar
     );
   }
 
-  Widget _buildCategoryItem(BuildContext context, String imagePath, String label,
+  Widget _buildCategoryItem(
+      BuildContext context, String imagePath, String label,
       {String? route}) {
     return GestureDetector(
       onTap: () {
@@ -204,7 +239,11 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Column(
         children: [
-          Image.asset(imagePath),
+          Image.asset(
+            imagePath,
+            height: 50,
+            width: 50,
+          ),
           const SizedBox(height: 10),
           Text(
             label,
@@ -220,3 +259,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
