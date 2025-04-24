@@ -7,6 +7,7 @@ import 'package:stock_careers/blocs/course/course_state.dart';
 import 'package:stock_careers/presentation/screens/course_detail_screen.dart';
 import 'package:stock_careers/presentation/widgets/bottom_nav_bar.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
+import 'package:stock_careers/utils/constants/dimensions.dart';
 
 import '../../utils/constants/textstyle.dart';
 import '../widgets/app_shimmer.dart';
@@ -69,7 +70,7 @@ class _CourseScreenState extends State<CourseScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
-                    child:AppShimmer(
+                    child: AppShimmer(
                       child: Container(
                         height: 150,
                         decoration: BoxDecoration(
@@ -161,7 +162,7 @@ class _CourseScreenState extends State<CourseScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 16),
                       child: Container(
-                        height: 150,
+                        height: 110,
                         decoration: BoxDecoration(
                           color: Theme.of(context).brightness == Brightness.dark
                               ? AppColors.cardBackground
@@ -177,56 +178,74 @@ class _CourseScreenState extends State<CourseScreen> {
                         ),
                         child: Row(
                           children: [
+                            // ---------- thumbnail ------------------------------------
                             Container(
-                              padding: const EdgeInsets.all(8),
-                              margin: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: AppColors.cardBackgroundLight,
+                              margin: EdgeInsets.only(left: 10),
+                              width: Dimensions.screenWidth * 0.33,
+                              child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
+                                child: AspectRatio(
+                                  aspectRatio:
+                                      16/10, // ← keeps a horizontal feel
+                                  child: Image.network(
+                                    course.courseImage,
+                                    fit: BoxFit
+                                        .cover, // fills the box, no stretch
+                                  ),
+                                ),
                               ),
-                              child: Image.network(course.courseImage,
-                                  width: 80, height: 100, fit: BoxFit.fitWidth),
                             ),
+                            // ---------- text block -----------------------------------
+                            const SizedBox(width: 12),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(10),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(course.courseName,
-                                        style: TextStyle(
-                                            color:
-                                                Theme.of(context).brightness ==
-                                                        Brightness.dark
-                                                    ? Colors.white
-                                                    : Colors.black,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold)),
-                                    const SizedBox(height: 6),
-                                    Text(course.categoryName,
-                                        style: const TextStyle(
-                                            color: AppColors.hint,
-                                            fontSize: 14)),
-                                    const SizedBox(height: 6),
+                                    Text(
+                                      course.courseName,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displaySmall,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      course.categoryName,
+                                      style:
+                                          Theme.of(context).textTheme.titleSmall,
+                                    ),
+                                    const Spacer(),
                                     Row(
                                       children: [
                                         Text(
-                                            "Price: ${course.price.isEmpty ? 'Free' : course.price}",
-                                            style: const TextStyle(
-                                                color: AppColors.primary,
-                                                fontWeight: FontWeight.bold)),
+                                          course.price.isEmpty
+                                              ? 'Free'
+                                              : '₹${course.price}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall
+                                              ?.copyWith(
+                                                  color: AppColors.primary),
+                                        ),
                                         const SizedBox(width: 10),
-                                        Text(course.duration,
-                                            style: const TextStyle(
-                                                color: Colors.red,
-                                                fontSize: 12)),
+                                        Text(
+                                          course.duration,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall
+                                              ?.copyWith(color: Colors.red),
+                                        ),
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
