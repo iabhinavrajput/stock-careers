@@ -8,6 +8,7 @@ import '../../../data/services/ebook_service.dart';
 import '../../../utils/constants/colors.dart';
 import 'package:stock_careers/presentation/widgets/bottom_nav_bar.dart'; // ✅ Import BottomNavBar
 
+import '../../utils/constants/dimensions.dart';
 import '../widgets/app_shimmer.dart';
 
 class EbookScreen extends StatefulWidget {
@@ -48,10 +49,9 @@ class _EbookScreenState extends State<EbookScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 Text(
+                Text(
                   "E-Books",
-                                    style: Theme.of(context).textTheme.headlineMedium,
-
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Image.asset(
                   'assets/images/avatar.png',
@@ -159,7 +159,7 @@ class _EbookScreenState extends State<EbookScreen> {
                   return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
                       child: Container(
-                        height: 150,
+                        height: 110,
                         decoration: BoxDecoration(
                           color: Theme.of(context).brightness == Brightness.dark
                               ? AppColors.cardBackground
@@ -169,57 +169,82 @@ class _EbookScreenState extends State<EbookScreen> {
                         child: Row(
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(8),
-                              margin: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: AppColors.cardBackgroundLight,
+                              margin: EdgeInsets.only(left: 10),
+                              width: Dimensions.screenWidth * 0.33,
+                            
+                              child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Image.network(ebook.image,
-                                  width: 80, height: 100, fit: BoxFit.cover),
+                                child: AspectRatio(
+                                  aspectRatio:
+                                      16/10, // ← keeps a horizontal feel
+                                  child:Image.network(ebook.image,
+                                  width: 80, height: 100, fit: BoxFit.cover),))
                             ),
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    vertical: 12, horizontal: 10),
+                                    vertical: 0, horizontal: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       ebook.name,
-                                       style: Theme.of(context)
-                                        .textTheme
-                                        .displaySmall,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displaySmall,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       ebook.desc,
-                                     style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                     ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pushNamed(
+                                     GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
                                           context,
                                           '/ebookDetail',
                                           arguments: ebook.id,
                                         );
-                                      },
-                                      child: const Text(
-                                        "Read More",
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                          color: AppColors.lightPrimary,
-                                          fontSize: 14,
-                                        ),
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Text(
+                                        'Read more ›',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                                color: AppColors.lightPrimary),
                                       ),
                                     ),
+                                  ),
+                                    // TextButton(
+                                    //   onPressed: () {
+                                    //     Navigator.pushNamed(
+                                    //       context,
+                                    //       '/ebookDetail',
+                                    //       arguments: ebook.id,
+                                    //     );
+                                    //   },
+                                    //   child:Align(
+                                    //   alignment: Alignment.bottomRight,
+                                    //   child: const Text(
+                                    //     "Read More",
+                                    //     textAlign: TextAlign.right,
+                                    //     style: TextStyle(
+                                    //       color: AppColors.lightPrimary,
+                                    //       fontSize: 14,
+                                    //     ),
+                                    //   ),
+                                    //   )
+                                    // ),
                                   ],
                                 ),
                               ),
