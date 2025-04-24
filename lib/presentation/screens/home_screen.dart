@@ -163,7 +163,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: Dimensions.pagePadding,
                     ),
-                  
                   ]),
             ),
             const SizedBox(height: 80),
@@ -222,15 +221,10 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: AppColors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],
       ),
     );
   }
 }
-

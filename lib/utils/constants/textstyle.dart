@@ -20,42 +20,45 @@ class _Light {
         fontWeight: FontWeight.w700,
       );
 
-      TextStyle get headlineMedium => TextStyle(
+  TextStyle get headlineMedium => TextStyle(
         fontSize: 30,
         fontWeight: FontWeight.w600,
       );
 
-      TextStyle get headlineSmall => TextStyle(
+  TextStyle get headlineSmall => TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w700,
       );
-
-
 
   TextStyle get titleMedium => TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
         fontFamily: 'Poppins',
       );
-        TextStyle get titleSmall => TextStyle(
+  TextStyle get titleSmall => TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w400,
         fontFamily: 'Poppins',
       );
 
-      TextStyle get displaySmall => TextStyle(
+  TextStyle get bodyMedium => TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+      );
+
+  TextStyle get displaySmall => TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w500,
         fontFamily: 'Poppins',
       );
 
-       TextStyle get displayLarge => TextStyle(
+  TextStyle get displayLarge => TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w500,
         fontFamily: 'Poppins',
       );
 
-      TextStyle get labelMedium => GoogleFonts.poppins(
+  TextStyle get labelMedium => GoogleFonts.poppins(
         fontSize: 12,
         fontWeight: FontWeight.w600,
       );
@@ -69,12 +72,12 @@ class _Dark {
         fontWeight: FontWeight.w700,
       );
 
-      TextStyle get headlineMedium => TextStyle(
+  TextStyle get headlineMedium => TextStyle(
         fontSize: 30,
         fontWeight: FontWeight.w600,
       );
 
-      TextStyle get headlineSmall => TextStyle(
+  TextStyle get headlineSmall => TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w700,
       );
@@ -83,26 +86,30 @@ class _Dark {
         fontSize: 22,
         fontWeight: FontWeight.w400,
       );
-        TextStyle get titleSmall => TextStyle(
+  TextStyle get titleSmall => TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w400,
         fontFamily: 'Poppins',
       );
 
-       TextStyle get displaySmall=> TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        fontFamily: 'Poppins',
-        color: Colors.white
+  TextStyle get bodyMedium => TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
       );
 
-       TextStyle get displayLarge => TextStyle(
+  TextStyle get displaySmall => TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'Poppins',
+      color: Colors.white);
+
+  TextStyle get displayLarge => TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w500,
         fontFamily: 'Poppins',
       );
 
-       TextStyle get labelMedium => GoogleFonts.poppins(
+  TextStyle get labelMedium => GoogleFonts.poppins(
         fontSize: 12,
         fontWeight: FontWeight.w600,
         // color: Colors.white
