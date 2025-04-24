@@ -7,8 +7,7 @@ import 'package:stock_careers/data/services/course_service.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_html/flutter_html.dart'; // Import the flutter_html package
-import 'package:html/parser.dart'
-    as html_parser;
+import 'package:html/parser.dart' as html_parser;
 
 import '../widgets/app_shimmer.dart'; // Import the html parser package
 
@@ -58,7 +57,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     right: 0,
                     bottom: shimmerHeight, // Dynamically adjust shimmer area
                     child: Container(
-                      color: Theme.of(context).brightness == Brightness.dark?AppColors.grey:Colors.grey.shade100, // Placeholder color for image area
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.grey
+                          : Colors.grey
+                              .shade100, // Placeholder color for image area
                     ),
                   ),
                   Positioned(
@@ -67,8 +69,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     right: 0,
                     bottom: 0,
                     child: Container(
-                      decoration:  BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.dark?AppColors.cardBackground:Colors.white,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.cardBackground
+                            : Colors.white,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30),
@@ -165,19 +169,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
-                                    child: Text(
-                                      course.courseName,
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? Colors.white
-                                            : Colors.black,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                                    child: Text(course.courseName,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium),
                                   ),
                                   const SizedBox(width: 10),
                                   Text(
@@ -192,7 +187,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 5),
                               Text(
                                 'Author: ${course.author}',
                                 style: const TextStyle(
@@ -200,18 +195,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                   color: AppColors.grey,
                                 ),
                               ),
-                              const SizedBox(height: 20),
-                              Text(
-                                'Description',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? Colors.white
-                                      : Colors.black,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 5),
                               // Render the parsed HTML description with custom styles
                               Html(
                                 data: course
@@ -221,15 +205,16 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                   'body': Style(
                                     color: Theme.of(context).brightness ==
                                             Brightness.dark
-                                        ? Colors.white
-                                        : Colors
-                                            .black, // Change body text color
+                                        ? Colors.grey.shade300
+                                        : Colors.grey
+                                            .shade700, // Change body text color
                                   ),
                                   'p': Style(
                                     color: Theme.of(context).brightness ==
                                             Brightness.dark
-                                        ? Colors.white
-                                        : Colors.black, // Paragraph text color
+                                        ? Colors.grey.shade300
+                                        : Colors.grey
+                                            .shade700, // Paragraph text color
                                     fontSize: FontSize(16),
                                   ),
                                   'h1': Style(
@@ -255,7 +240,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                   ),
                                 },
                               ),
-                              const SizedBox(height: 40),
+                              const SizedBox(height: 10),
 
                               Container(
                                 alignment: Alignment.bottomCenter,

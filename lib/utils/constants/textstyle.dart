@@ -20,7 +20,7 @@ class _Light {
         fontWeight: FontWeight.w700,
       );
 
-  TextStyle get headlineMedium => TextStyle(
+  TextStyle get headlineMedium => GoogleFonts.poppins(
         fontSize: 30,
         fontWeight: FontWeight.w600,
       );
@@ -72,7 +72,7 @@ class _Dark {
         fontWeight: FontWeight.w700,
       );
 
-  TextStyle get headlineMedium => TextStyle(
+  TextStyle get headlineMedium => GoogleFonts.poppins(
         fontSize: 30,
         fontWeight: FontWeight.w600,
       );
