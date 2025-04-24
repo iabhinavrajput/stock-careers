@@ -39,19 +39,17 @@ class _BlogScreenState extends State<BlogScreen> {
         appBar: AppBar(
           toolbarHeight: 85,
           automaticallyImplyLeading: false,
-          backgroundColor: AppColors.background,
+          backgroundColor: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.background
+              : Colors.white,
           flexibleSpace: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   "Blog",
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Image.asset(
                   'assets/images/avatar.png',
@@ -62,7 +60,9 @@ class _BlogScreenState extends State<BlogScreen> {
             ),
           ),
         ),
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.background
+            : Colors.white,
         body: BlocBuilder<BlogBloc, BlogState>(
           builder: (context, state) {
             if (state is BlogLoading) {
@@ -76,7 +76,9 @@ class _BlogScreenState extends State<BlogScreen> {
                       child: Container(
                         height: 150,
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade800,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.grey.shade800
+                              : Colors.grey.shade100,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Row(
@@ -86,7 +88,7 @@ class _BlogScreenState extends State<BlogScreen> {
                               height: 120,
                               margin: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade700,
+                                // color: Colors.grey.shade700,
                                 borderRadius: BorderRadius.circular(15),
                               ),
                             ),
@@ -156,21 +158,23 @@ class _BlogScreenState extends State<BlogScreen> {
                     child: Container(
                       height: 150,
                       decoration: BoxDecoration(
-                        color: AppColors.cardBackground,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.cardBackground
+                            : Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
                         children: [
-                           Container(
-                              padding: const EdgeInsets.all(8),
-                              margin: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: AppColors.cardBackgroundLight,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Image.network(blog.blogImage,
-                                  width: 80, height: 100, fit: BoxFit.cover),
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            margin: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.cardBackgroundLight,
+                              borderRadius: BorderRadius.circular(15),
                             ),
+                            child: Image.network(blog.blogImage,
+                                width: 80, height: 100, fit: BoxFit.cover),
+                          ),
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -182,17 +186,17 @@ class _BlogScreenState extends State<BlogScreen> {
                                 children: [
                                   Text(
                                     blog.blogName,
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
                                     blog.blogDesc,
-                                    style: const TextStyle(
-                                        fontSize: 14, color: Colors.white70),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -204,13 +208,14 @@ class _BlogScreenState extends State<BlogScreen> {
                                         arguments: blog.id,
                                       );
                                     },
-                                    child: const Text("Read More", 
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                      color: AppColors.lightPrimary,
-                                      fontSize: 14,
-                                    
-                                    ),),
+                                    child: const Text(
+                                      "Read More",
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        color: AppColors.lightPrimary,
+                                        fontSize: 14,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),

@@ -37,23 +37,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? AppColors.background
+          : Colors.white,
       appBar: AppBar(
         toolbarHeight: 85,
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.background
+            : Colors.white,
         flexibleSpace: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
                 "Account",
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
             ],
           ),
@@ -77,20 +77,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text(
                     '${decodedToken?['username'] ?? 'N/A'}',
-                    style: const TextStyle(
-                      color: AppColors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 10),
                   Text(
                     '${decodedToken?['email'] ?? 'N/A'}',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: AppColors.white,
-                      fontSize: 16,
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 10),
                   if (decodedToken?['phone'] != null &&
@@ -136,10 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            color: AppColors.white,
-            fontSize: 16,
-          ),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         IconButton(
           icon: const Icon(Icons.chevron_right, color: AppColors.textGrey),

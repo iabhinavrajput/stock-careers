@@ -79,7 +79,9 @@ class _EbookDetailScreenState extends State<EbookDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(name ?? 'Ebook Detail'),
-        backgroundColor: AppColors.background,
+        backgroundColor:  Theme.of(context).brightness == Brightness.dark
+              ? AppColors.background
+              : Colors.white,
       ),
       body: loading
           ? const Center(child: CircularProgressIndicator())

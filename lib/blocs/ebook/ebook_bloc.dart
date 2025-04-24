@@ -9,7 +9,7 @@ class EbookBloc extends Bloc<EbookEvent, EbookState> {
   EbookBloc(this.ebookService) : super(EbookInitial()) {
     on<LoadEbooks>((event, emit) async {
       try {
-        emit(EbookLoading(shimmerCount: 3)); // Initial loading count
+        emit(EbookLoading(shimmerCount: 0)); // Initial loading count
         final ebooks = await ebookService.fetchEbooks();
         emit(EbookLoading(shimmerCount: ebooks.length)); // Dynamic shimmer count
         await Future.delayed(const Duration(seconds: 1));
