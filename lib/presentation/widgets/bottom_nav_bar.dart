@@ -14,16 +14,16 @@ class BottomNavBar extends StatelessWidget {
   final List<IconData> icons = const [
     Icons.home,
     Icons.school,
-    Icons.article,
-    Icons.book,
+    // Icons.article,
+    // Icons.book,
     Icons.person,
   ];
 
   final List<String> labels = const [
     'Home',
     'Courses',
-    'Blog',
-    'E-Books',
+    // 'Blog',
+    // 'E-Books',
     'Profile',
   ];
 

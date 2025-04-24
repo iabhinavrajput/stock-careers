@@ -106,7 +106,7 @@ class _Dark {
   TextStyle get displayLarge => TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w500,
-        fontFamily: 'Poppins',
+        fontFamily: 'Poppins', 
       );
 
   TextStyle get labelMedium => GoogleFonts.poppins(
@@ -123,5 +123,17 @@ class _Fixed {
         fontSize: 16,
         fontWeight: FontWeight.w500,
         fontFamily: 'Poppins',
+      );
+
+      TextStyle get userName =>  GoogleFonts.poppins(
+        fontSize: 22,
+        fontWeight: FontWeight.w600,
+        color: Colors.white
+      );
+
+       TextStyle get label =>  GoogleFonts.poppins(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: Colors.white
       );
 }

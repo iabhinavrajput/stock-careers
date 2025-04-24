@@ -157,7 +157,7 @@ class _BlogScreenState extends State<BlogScreen> {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: Container(
-                      height: 150,
+                      // height: 150,
                       decoration: BoxDecoration(
                         color: Theme.of(context).brightness == Brightness.dark
                             ? AppColors.cardBackground
@@ -167,23 +167,28 @@ class _BlogScreenState extends State<BlogScreen> {
                       child: Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(8),
-                            margin: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(0),
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
                             decoration: BoxDecoration(
                               color: AppColors.cardBackgroundLight,
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Image.network(blog.blogImage,
-                                width: 80, height: 100, fit: BoxFit.cover),
+                            child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular(15), // ⇦ same radius
+                              child: Image.network(blog.blogImage,
+                                  width: 80, height: 90, fit: BoxFit.cover),
+                            ),
                           ),
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 10),
+                                  vertical: 10, horizontal: 10),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                // mainAxisAlignment:
+                                //     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
                                     blog.blogName,
@@ -195,29 +200,48 @@ class _BlogScreenState extends State<BlogScreen> {
                                   ),
                                   Text(
                                     blog.blogDesc,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall,
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  TextButton(
-                                    onPressed: () {
+                                  GestureDetector(
+                                    onTap: () {
                                       Navigator.pushNamed(
                                         context,
                                         '/blogDetail',
                                         arguments: blog.id,
                                       );
                                     },
-                                    child: const Text(
-                                      "Read More",
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                        color: AppColors.lightPrimary,
-                                        fontSize: 14,
+                                    child: Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Text(
+                                        'Read more ›',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                                color: AppColors.lightPrimary),
                                       ),
                                     ),
                                   ),
+                                  // TextButton(
+                                  //   onPressed: () {
+                                  //     Navigator.pushNamed(
+                                  //       context,
+                                  //       '/blogDetail',
+                                  //       arguments: blog.id,
+                                  //     );
+                                  //   },
+                                  //   child: const Text(
+                                  //     "Read More",
+                                  //     textAlign: TextAlign.right,
+                                  //     style: TextStyle(
+                                  //       color: AppColors.lightPrimary,
+                                  //       fontSize: 14,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -242,7 +266,7 @@ class _BlogScreenState extends State<BlogScreen> {
               Navigator.pushNamed(context, '/home');
             } else if (index == 1) {
               Navigator.pushNamed(context, '/course');
-            }  else if (index == 3) {
+            } else if (index == 3) {
               Navigator.pushNamed(context, '/ebook');
             } else if (index == 4) {
               Navigator.pushNamed(context, '/profile');

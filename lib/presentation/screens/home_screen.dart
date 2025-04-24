@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:stock_careers/utils/constants/dimensions.dart';
 import 'package:stock_careers/utils/constants/textstyle.dart';
+import '../widgets/recent_blogs.dart';
 import 'course_screen.dart'; // Import your CourseScreen here
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
@@ -47,40 +48,57 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 180,
+        toolbarHeight: Dimensions.screenHeight * 0.1,
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.primary,
         flexibleSpace: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          // child: Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         Text(
+          //           "Hi, $username",
+          //           style: AppTextStyles.fixed.userName,
+          //         ),
+          //         Image.asset(
+          //           'assets/images/avatar.png',
+          //           height: 50,
+          //           width: 50,
+          //         ),
+          //       ],
+          //     ),
+          //     // const SizedBox(height: 8),
+          //      Text(
+          //       "Let’s start learning",
+          //       style: AppTextStyles.fixed.label,
+          //     )
+          //   ],
+          // ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Hi, $username",
-                    style: const TextStyle(
-                      color: AppColors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: AppTextStyles.fixed.userName,
                   ),
-                  Image.asset(
-                    'assets/images/avatar.png',
-                    height: 50,
-                    width: 50,
-                  ),
+                  Text(
+                    "Let’s start learning",
+                    style: AppTextStyles.fixed.label,
+                  )
                 ],
               ),
-              const SizedBox(height: 8),
-              const Text(
-                "Let’s start learning",
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 16,
-                ),
-              )
+              Image.asset(
+                'assets/images/avatar.png',
+                height: 50,
+                width: 50,
+              ),
             ],
           ),
         ),
@@ -116,15 +134,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   .toList(),
             ),
             const SizedBox(height: 20),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 "Categories",
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.displayLarge,
               ),
             ),
             const SizedBox(height: 20),
@@ -138,31 +152,39 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         _buildCategoryItem(
                           context,
-                          'assets/images/new/market-analysis.png',
-                          "Market\nAnalysis",
-                        ),
-                        _buildCategoryItem(
-                          context,
                           'assets/images/new/Blog-icon.png',
-                          "Informative\nBlogs",
+                          "Blogs",
                           route: '/blog',
                         ),
                         _buildCategoryItem(
                           context,
-                          'assets/images/new/Webinars-icon.png',
-                          "Webinar\nSessions",
+                          'assets/images/new/Online-classes.png',
+                          "Courses",
+                          route: '/course',
                         ),
                         _buildCategoryItem(
+                            context, 'assets/images/new/E-book.png', "E-Books",
+                            route: '/ebook'),
+                        _buildCategoryItem(
                           context,
-                          'assets/images/new/Online-classes.png',
-                          "Online\nClasses",
-                          route: '/course',
+                          'assets/images/new/Webinars-icon.png',
+                          "Webinar",
                         ),
                       ],
                     ),
                     SizedBox(
                       height: Dimensions.pagePadding,
                     ),
+                    
+                    Container(
+                        alignment: Alignment.bottomLeft,
+                        child: Text('Recent Blogs',
+                           
+                            style: Theme.of(context).textTheme.displayLarge),
+                      ),
+                    const SizedBox(height: 12),
+                    const RecentBlogs(), // <<< add this widget
+                    const SizedBox(height: 20),
                   ]),
             ),
             const SizedBox(height: 80),
@@ -197,16 +219,77 @@ class _HomeScreenState extends State<HomeScreen> {
         } else {
           showDialog(
             context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('Coming Soon'),
-              content: const Text('This feature is coming soon.'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('OK'),
+            barrierDismissible: true,
+            builder: (context) {
+              return AlertDialog(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-              ],
-            ),
+                backgroundColor: Theme.of(context).cardColor,
+                insetPadding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                titlePadding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+                contentPadding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
+                actionsPadding: const EdgeInsets.only(right: 12, bottom: 0),
+                title: Row(
+                  children: [
+                    Icon(Icons.info_rounded,
+                        color: AppColors.lightPrimary.withOpacity(0.6),
+                        size: 28),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Coming Soon',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ),
+                  ],
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Optional illustration
+                    // Image.asset(
+                    //   isDark
+                    //       ? 'assets/images/coming_soon_dark.png'
+                    //       : 'assets/images/coming_soon_light.png',
+                    //   height: 120,
+                    // ),
+                    // const SizedBox(height: 16),
+                    Text(
+                      'This feature is on the way. Stay tuned!',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ],
+                ),
+                actions: [
+                  Container(
+                    margin: EdgeInsets.all(20),
+                    width: 90,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            AppColors.lightPrimary.withOpacity(0.8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(
+                        'OK',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge
+                            ?.copyWith(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           );
         }
       },

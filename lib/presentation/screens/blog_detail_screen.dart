@@ -148,7 +148,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                     right: 0,
                     bottom: 0,
                     child: Container(
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Theme.of(context).brightness == Brightness.dark
                             ? AppColors.cardBackground
                             : Colors.white,
@@ -173,16 +173,19 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                     child: Text(
                                       blog.blogName,
                                       style: Theme.of(context)
-                                        .textTheme
-                                        .displayLarge,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
+                                          .textTheme
+                                          .headlineSmall,
+                                      // maxLines: 2,
+                                      // overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                   const SizedBox(width: 10),
                                   IconButton(
-                                    icon: const Icon(Icons.share,
-                                        color: AppColors.white),
+                                    icon: Icon(Icons.share,
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? AppColors.white
+                                            : Colors.black),
                                     onPressed: () {
                                       // Handle share action
                                     },
@@ -197,14 +200,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                   color: AppColors.grey,
                                 ),
                               ),
-                              const SizedBox(height: 20),
-                               Text(
-                                'Description',
-                                style: Theme.of(context)
-                                        .textTheme
-                                        .displaySmall,
-                              ),
                               const SizedBox(height: 10),
+
                               // Render the parsed HTML description with custom styles
                               Html(
                                 data: blog.blogDesc, // Use the original HTML
@@ -213,16 +210,58 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                   'body': Style(
                                     color: Theme.of(context).brightness ==
                                             Brightness.dark
-                                        ? Colors.white
-                                        : Colors.black, // Change body text color
+                                        ? Colors.grey.shade300
+                                        : Colors.grey
+                                            .shade700, // Change body text color
                                   ),
                                   'p': Style(
-                                    color:
-                                        Theme.of(context).brightness ==
+                                    color: Theme.of(context).brightness ==
                                             Brightness.dark
                                         ? Colors.white
-                                        : Colors.black, // Paragraph text color
+                                        : Colors.grey, // Paragraph text color
                                     fontSize: FontSize(16),
+                                  ),
+                                  'h1': Style(
+                                    color: AppColors.primary, // Header 1 color
+                                    fontSize: FontSize(24),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  'h2': Style(
+                                    color: AppColors.primary, // Header 2 color
+                                    fontSize: FontSize(20),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  'a': Style(
+                                    color: AppColors.primary, // Link color
+                                    fontSize: FontSize(16),
+                                    textDecoration: TextDecoration.underline,
+                                  ),
+                                  'img': Style(
+                                    width: Width(double
+                                        .infinity), // Ensure image stretches across
+                                    height: Height(
+                                        250), // Set a fixed height for images
+                                  ),
+                                },
+                              ),
+                              Html(
+                                data: blog.longDesc, // Use the original HTML
+                                style: {
+                                  // Apply styles to HTML tags
+                                  'body': Style(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.grey.shade300
+                                        : Colors.grey.shade700,
+                                    // fontSize: FontSize(16),
+                                    // Change body text color
+                                  ),
+                                  'p': Style(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.grey.shade300
+                                        : Colors.grey, // Paragraph text color
+                                    // fontSize: FontSize(16),
                                   ),
                                   'h1': Style(
                                     color: AppColors.primary, // Header 1 color
