@@ -8,6 +8,7 @@ import '../../../data/services/ebook_service.dart';
 import '../../../utils/constants/colors.dart';
 import 'package:stock_careers/presentation/widgets/bottom_nav_bar.dart'; // ✅ Import BottomNavBar
 
+import '../widgets/app_shimmer.dart';
 
 class EbookScreen extends StatefulWidget {
   const EbookScreen({super.key});
@@ -39,19 +40,18 @@ class _EbookScreenState extends State<EbookScreen> {
         appBar: AppBar(
           toolbarHeight: 85,
           automaticallyImplyLeading: false,
-          backgroundColor: AppColors.background,
+          backgroundColor: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.background
+              : Colors.white,
           flexibleSpace: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                 Text(
                   "E-Books",
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                  ),
+                                    style: Theme.of(context).textTheme.headlineMedium,
+
                 ),
                 Image.asset(
                   'assets/images/avatar.png',
@@ -62,7 +62,9 @@ class _EbookScreenState extends State<EbookScreen> {
             ),
           ),
         ),
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.background
+            : Colors.white,
         body: BlocBuilder<EbookBloc, EbookState>(
           builder: (context, state) {
             if (state is EbookLoading) {
@@ -72,13 +74,14 @@ class _EbookScreenState extends State<EbookScreen> {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey.shade800,
-                        highlightColor: Colors.grey.shade700,
+                      child: AppShimmer(
                         child: Container(
                           height: 150,
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade800,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.grey.shade800
+                                    : Colors.grey.shade100,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Row(
@@ -88,7 +91,7 @@ class _EbookScreenState extends State<EbookScreen> {
                                 height: 120,
                                 margin: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
-                                  color: Colors.grey.shade700,
+                                  // color: Colors.grey.shade700,
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                               ),
@@ -158,7 +161,9 @@ class _EbookScreenState extends State<EbookScreen> {
                       child: Container(
                         height: 150,
                         decoration: BoxDecoration(
-                          color: AppColors.cardBackground,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.cardBackground
+                              : Colors.grey.shade200,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Row(
@@ -184,17 +189,17 @@ class _EbookScreenState extends State<EbookScreen> {
                                   children: [
                                     Text(
                                       ebook.name,
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
+                                       style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       ebook.desc,
-                                      style: const TextStyle(
-                                          fontSize: 14, color: Colors.white70),
+                                     style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                     ),

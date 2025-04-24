@@ -9,6 +9,8 @@ import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:html/parser.dart' as html_parser;
 
+import '../widgets/app_shimmer.dart';
+
 class BlogDetailScreen extends StatefulWidget {
   final String blogId;
 
@@ -58,7 +60,9 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                     right: 0,
                     bottom: shimmerHeight,
                     child: Container(
-                      color: AppColors.grey,
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.grey.shade800
+                          : Colors.grey.shade100,
                     ),
                   ),
                   Positioned(
@@ -67,28 +71,40 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                     right: 0,
                     bottom: 0,
                     child: Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.cardBackground,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.cardBackground
+                            : Colors.grey.shade200,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30),
                         ),
                       ),
                       padding: const EdgeInsets.all(20),
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey[800]!,
-                        highlightColor: Colors.grey[700]!,
+                      child: AppShimmer(
                         child: SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(height: shimmerHeight * 0.1, width: 200, color: Colors.grey),
+                              Container(
+                                  height: shimmerHeight * 0.1,
+                                  width: 200,
+                                  color: Colors.grey),
                               const SizedBox(height: 10),
-                              Container(height: shimmerHeight * 0.1, width: 100, color: Colors.grey),
+                              Container(
+                                  height: shimmerHeight * 0.1,
+                                  width: 100,
+                                  color: Colors.grey),
                               const SizedBox(height: 30),
-                              Container(height: shimmerHeight * 0.2, width: 150, color: Colors.grey),
+                              Container(
+                                  height: shimmerHeight * 0.2,
+                                  width: 150,
+                                  color: Colors.grey),
                               const SizedBox(height: 10),
-                              Container(height: shimmerHeight * 0.2, width: double.infinity, color: Colors.grey),
+                              Container(
+                                  height: shimmerHeight * 0.2,
+                                  width: double.infinity,
+                                  color: Colors.grey),
                             ],
                           ),
                         ),
@@ -110,7 +126,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                     top: 0,
                     left: 0,
                     right: 0,
-                    bottom: screenHeight * 0.7, // Dynamically adjust shimmer area
+                    bottom:
+                        screenHeight * 0.7, // Dynamically adjust shimmer area
                     child: blog.blogImage.isNotEmpty
                         ? Container(
                             decoration: BoxDecoration(
@@ -121,7 +138,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                             ),
                           )
                         : Container(
-                            color: AppColors.grey, // Show grey color if no image
+                            color:
+                                AppColors.grey, // Show grey color if no image
                           ),
                   ),
                   Positioned(
@@ -130,8 +148,10 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                     right: 0,
                     bottom: 0,
                     child: Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.cardBackground,
+                      decoration:  BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.cardBackground
+                            : Colors.white,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30),
@@ -152,23 +172,21 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                   Expanded(
                                     child: Text(
                                       blog.blogName,
-                                      style: const TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.white,
-                                      ),
+                                      style: Theme.of(context)
+                                        .textTheme
+                                        .displayLarge,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                   const SizedBox(width: 10),
                                   IconButton(
-                                      icon: const Icon(Icons.share,
-                                          color: AppColors.white),
-                                      onPressed: () {
-                                        // Handle share action
-                                      },
-                                    ),
+                                    icon: const Icon(Icons.share,
+                                        color: AppColors.white),
+                                    onPressed: () {
+                                      // Handle share action
+                                    },
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 10),
@@ -180,12 +198,11 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                 ),
                               ),
                               const SizedBox(height: 20),
-                              const Text(
+                               Text(
                                 'Description',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: AppColors.white,
-                                ),
+                                style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall,
                               ),
                               const SizedBox(height: 10),
                               // Render the parsed HTML description with custom styles
@@ -194,12 +211,17 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                 style: {
                                   // Apply styles to HTML tags
                                   'body': Style(
-                                    color: AppColors
-                                        .white, // Change body text color
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.white
+                                        : Colors.black, // Change body text color
                                   ),
                                   'p': Style(
                                     color:
-                                        AppColors.white, // Paragraph text color
+                                        Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.white
+                                        : Colors.black, // Paragraph text color
                                     fontSize: FontSize(16),
                                   ),
                                   'h1': Style(

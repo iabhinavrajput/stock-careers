@@ -51,30 +51,10 @@ class _EbookDetailScreenState extends State<EbookDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 85,
-        automaticallyImplyLeading: false,
-        backgroundColor: AppColors.background,
-        flexibleSpace: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Ebook Pdf",
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Image.asset(
-                'assets/images/avatar.png',
-                height: 50,
-                width: 50,
-              ),
-            ],
-          ),
-        ),
+        title: Text('Ebook Detail'),
+        backgroundColor:  Theme.of(context).brightness == Brightness.dark
+              ? AppColors.background
+              : Colors.white,
       ),
       body: BlocBuilder<EbookDetailBloc, EbookDetailState>(
         builder: (context, state) {

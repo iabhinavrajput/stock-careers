@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'colors.dart';
 
 class AppTextStyles {
@@ -19,6 +20,11 @@ class _Light {
         fontWeight: FontWeight.w700,
       );
 
+      TextStyle get headlineMedium => TextStyle(
+        fontSize: 30,
+        fontWeight: FontWeight.w600,
+      );
+
       TextStyle get headlineSmall => TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w700,
@@ -37,10 +43,21 @@ class _Light {
         fontFamily: 'Poppins',
       );
 
-      TextStyle get displayLarge => TextStyle(
+      TextStyle get displaySmall => TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w500,
         fontFamily: 'Poppins',
+      );
+
+       TextStyle get displayLarge => TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w500,
+        fontFamily: 'Poppins',
+      );
+
+      TextStyle get labelMedium => GoogleFonts.poppins(
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
       );
 }
 
@@ -50,6 +67,11 @@ class _Dark {
   TextStyle get headlineLarge => TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.w700,
+      );
+
+      TextStyle get headlineMedium => TextStyle(
+        fontSize: 30,
+        fontWeight: FontWeight.w600,
       );
 
       TextStyle get headlineSmall => TextStyle(
@@ -67,11 +89,23 @@ class _Dark {
         fontFamily: 'Poppins',
       );
 
-       TextStyle get displayLarge => TextStyle(
+       TextStyle get displaySmall=> TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w500,
         fontFamily: 'Poppins',
         color: Colors.white
+      );
+
+       TextStyle get displayLarge => TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w500,
+        fontFamily: 'Poppins',
+      );
+
+       TextStyle get labelMedium => GoogleFonts.poppins(
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+        // color: Colors.white
       );
 }
 
