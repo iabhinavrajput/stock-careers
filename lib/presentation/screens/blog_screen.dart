@@ -7,6 +7,8 @@ import 'package:stock_careers/blocs/blog/blog_state.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:stock_careers/data/services/blog_service.dart';
 
+import '../widgets/app_shimmer.dart';
+
 class BlogScreen extends StatefulWidget {
   const BlogScreen({super.key});
 
@@ -70,9 +72,7 @@ class _BlogScreenState extends State<BlogScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
-                    child: Shimmer.fromColors(
-                      baseColor: Colors.grey.shade800,
-                      highlightColor: Colors.grey.shade700,
+                    child: AppShimmer(
                       child: Container(
                         height: 150,
                         decoration: BoxDecoration(

@@ -6,6 +6,7 @@ import 'package:stock_careers/blocs/ebook/ebook_event.dart';
 import 'package:stock_careers/blocs/ebook/ebook_state.dart';
 import '../../../data/services/ebook_service.dart';
 import '../../../utils/constants/colors.dart';
+import '../widgets/app_shimmer.dart';
 
 class EbookScreen extends StatefulWidget {
   const EbookScreen({super.key});
@@ -70,9 +71,7 @@ class _EbookScreenState extends State<EbookScreen> {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey.shade800,
-                        highlightColor: Colors.grey.shade700,
+                      child:AppShimmer(
                         child: Container(
                           height: 150,
                           decoration: BoxDecoration(

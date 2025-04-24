@@ -9,6 +9,8 @@ import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:html/parser.dart' as html_parser;
 
+import '../widgets/app_shimmer.dart';
+
 class BlogDetailScreen extends StatefulWidget {
   final String blogId;
 
@@ -75,20 +77,30 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                         ),
                       ),
                       padding: const EdgeInsets.all(20),
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey[800]!,
-                        highlightColor: Colors.grey[700]!,
+                      child: AppShimmer(
                         child: SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(height: shimmerHeight * 0.1, width: 200, color: Colors.grey),
+                              Container(
+                                  height: shimmerHeight * 0.1,
+                                  width: 200,
+                                  color: Colors.grey),
                               const SizedBox(height: 10),
-                              Container(height: shimmerHeight * 0.1, width: 100, color: Colors.grey),
+                              Container(
+                                  height: shimmerHeight * 0.1,
+                                  width: 100,
+                                  color: Colors.grey),
                               const SizedBox(height: 30),
-                              Container(height: shimmerHeight * 0.2, width: 150, color: Colors.grey),
+                              Container(
+                                  height: shimmerHeight * 0.2,
+                                  width: 150,
+                                  color: Colors.grey),
                               const SizedBox(height: 10),
-                              Container(height: shimmerHeight * 0.2, width: double.infinity, color: Colors.grey),
+                              Container(
+                                  height: shimmerHeight * 0.2,
+                                  width: double.infinity,
+                                  color: Colors.grey),
                             ],
                           ),
                         ),
@@ -110,7 +122,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                     top: 0,
                     left: 0,
                     right: 0,
-                    bottom: screenHeight * 0.7, // Dynamically adjust shimmer area
+                    bottom:
+                        screenHeight * 0.7, // Dynamically adjust shimmer area
                     child: blog.blogImage.isNotEmpty
                         ? Container(
                             decoration: BoxDecoration(
@@ -121,7 +134,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                             ),
                           )
                         : Container(
-                            color: AppColors.grey, // Show grey color if no image
+                            color:
+                                AppColors.grey, // Show grey color if no image
                           ),
                   ),
                   Positioned(
@@ -163,12 +177,12 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                   ),
                                   const SizedBox(width: 10),
                                   IconButton(
-                                      icon: const Icon(Icons.share,
-                                          color: AppColors.white),
-                                      onPressed: () {
-                                        // Handle share action
-                                      },
-                                    ),
+                                    icon: const Icon(Icons.share,
+                                        color: AppColors.white),
+                                    onPressed: () {
+                                      // Handle share action
+                                    },
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 10),

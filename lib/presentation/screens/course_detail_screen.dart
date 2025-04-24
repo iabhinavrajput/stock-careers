@@ -8,7 +8,9 @@ import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_html/flutter_html.dart'; // Import the flutter_html package
 import 'package:html/parser.dart'
-    as html_parser; // Import the html parser package
+    as html_parser;
+
+import '../widgets/app_shimmer.dart'; // Import the html parser package
 
 class CourseDetailScreen extends StatefulWidget {
   final String courseId;
@@ -56,7 +58,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     right: 0,
                     bottom: shimmerHeight, // Dynamically adjust shimmer area
                     child: Container(
-                      color: AppColors.grey, // Placeholder color for image area
+                      color: Theme.of(context).brightness == Brightness.dark?AppColors.grey:Colors.grey.shade100, // Placeholder color for image area
                     ),
                   ),
                   Positioned(
@@ -65,17 +67,15 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     right: 0,
                     bottom: 0,
                     child: Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.cardBackground,
+                      decoration:  BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.dark?AppColors.cardBackground:Colors.white,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30),
                         ),
                       ),
                       padding: const EdgeInsets.all(20),
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey[800]!,
-                        highlightColor: Colors.grey[700]!,
+                      child: AppShimmer(
                         child: SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,7 +281,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                     ),
                                     const SizedBox(width: 10),
                                     IconButton(
-                                      icon:  Icon(
+                                      icon: Icon(
                                         Icons.share,
                                         color: Theme.of(context).brightness ==
                                                 Brightness.dark
