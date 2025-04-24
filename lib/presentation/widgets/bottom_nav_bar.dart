@@ -33,11 +33,13 @@ class BottomNavBar extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.cardBackground
+            : Colors.grey.shade200,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withOpacity(0.03),
             spreadRadius: 1,
             blurRadius: 10,
           ),
@@ -71,11 +73,9 @@ class BottomNavBar extends StatelessWidget {
                     labels[index],
                     style: TextStyle(
                       fontSize: 12,
-                      color:
-                          isSelected ? AppColors.primary : AppColors.hint,
-                      fontWeight: isSelected
-                          ? FontWeight.bold
-                          : FontWeight.normal,
+                      color: isSelected ? AppColors.primary : AppColors.hint,
+                      fontWeight:
+                          isSelected ? FontWeight.bold : FontWeight.normal,
                     ),
                   )
                 ],
