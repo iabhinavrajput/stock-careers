@@ -163,33 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: Dimensions.pagePadding,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildCategoryItem(
-                          context,
-                          'assets/images/new/Market-analysis-solid-icon.png',
-                          "Market\nAnalysis",
-                        ),
-                        _buildCategoryItem(
-                          context,
-                          'assets/images/new/Blog-solid-icon.png',
-                          "Informative\nBlogs",
-                          route: '/blog',
-                        ),
-                        _buildCategoryItem(
-                          context,
-                          'assets/images/new/Webinar-solid-icon.png',
-                          "Webinar\nSessions",
-                        ),
-                        _buildCategoryItem(
-                          context,
-                          'assets/images/new/Online-classes-solid.png',
-                          "Online\nClasses",
-                          route: '/course',
-                        ),
-                      ],
-                    ),
+                  
                   ]),
             ),
             const SizedBox(height: 80),
