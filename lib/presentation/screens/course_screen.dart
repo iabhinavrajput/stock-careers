@@ -267,12 +267,13 @@ class _CourseScreenState extends State<CourseScreen> {
             if (index == 0) {
               Navigator.pushNamed(context, '/home');
             } else if (index == 2) {
-              Navigator.pushNamed(context, '/blog');
-            } else if (index == 3) {
-              Navigator.pushNamed(context, '/ebook');
-            } else if (index == 4) {
               Navigator.pushNamed(context, '/profile');
-            }
+            } 
+            // else if (index == 3) {
+            //   Navigator.pushNamed(context, '/ebook');
+            // } else if (index == 4) {
+            //   Navigator.pushNamed(context, '/profile');
+            // }
           },
         ), // Added BottomNavBar here
       ),

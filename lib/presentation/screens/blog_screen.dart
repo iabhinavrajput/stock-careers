@@ -258,21 +258,21 @@ class _BlogScreenState extends State<BlogScreen> {
             return const SizedBox.shrink();
           },
         ),
-        bottomNavigationBar: BottomNavBar(
-          currentIndex: 2, // Set the current index for the active tab
-          onTabTapped: (index) {
-            // Handle tab navigation logic here
-            if (index == 0) {
-              Navigator.pushNamed(context, '/home');
-            } else if (index == 1) {
-              Navigator.pushNamed(context, '/course');
-            } else if (index == 3) {
-              Navigator.pushNamed(context, '/ebook');
-            } else if (index == 4) {
-              Navigator.pushNamed(context, '/profile');
-            }
-          },
-        ), // ✅ BottomNavBar added here
+        // bottomNavigationBar: BottomNavBar(
+        //   currentIndex: 2, // Set the current index for the active tab
+        //   onTabTapped: (index) {
+        //     // Handle tab navigation logic here
+        //     if (index == 0) {
+        //       Navigator.pushNamed(context, '/home');
+        //     } else if (index == 1) {
+        //       Navigator.pushNamed(context, '/course');
+        //     } else if (index == 3) {
+        //       Navigator.pushNamed(context, '/ebook');
+        //     } else if (index == 4) {
+        //       Navigator.pushNamed(context, '/profile');
+        //     }
+        //   },
+        // ), // ✅ BottomNavBar added here
       ),
     );
   }

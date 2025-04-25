@@ -117,18 +117,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavBar(
-        currentIndex: 4, // Set the current index for the active tab
+        currentIndex: 2, // Set the current index for the active tab
         onTabTapped: (index) {
           // Handle tab navigation logic here
           if (index == 0) {
             Navigator.pushNamed(context, '/home');
           } else if (index == 1) {
             Navigator.pushNamed(context, '/course');
-          } else if (index == 2) {
-            Navigator.pushNamed(context, '/blog');
-          } else if (index == 3) {
-            Navigator.pushNamed(context, '/ebook');
           } 
+          // else if (index == 2) {
+          //   Navigator.pushNamed(context, '/blog');
+          // } else if (index == 3) {
+          //   Navigator.pushNamed(context, '/ebook');
+          // } 
         },
       ),
     );

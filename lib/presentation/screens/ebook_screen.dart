@@ -260,21 +260,21 @@ class _EbookScreenState extends State<EbookScreen> {
             return const SizedBox.shrink();
           },
         ),
-        bottomNavigationBar: BottomNavBar(
-          currentIndex: 3, // Set the current index for the active tab
-          onTabTapped: (index) {
-            // Handle tab navigation logic here
-            if (index == 0) {
-              Navigator.pushNamed(context, '/home');
-            } else if (index == 1) {
-              Navigator.pushNamed(context, '/course');
-            } else if (index == 2) {
-              Navigator.pushNamed(context, '/blog');
-            } else if (index == 4) {
-              Navigator.pushNamed(context, '/profile');
-            }
-          },
-        ),
+        // bottomNavigationBar: BottomNavBar(
+        //   currentIndex: 3, // Set the current index for the active tab
+        //   onTabTapped: (index) {
+        //     // Handle tab navigation logic here
+        //     if (index == 0) {
+        //       Navigator.pushNamed(context, '/home');
+        //     } else if (index == 1) {
+        //       Navigator.pushNamed(context, '/course');
+        //     } else if (index == 2) {
+        //       Navigator.pushNamed(context, '/blog');
+        //     } else if (index == 4) {
+        //       Navigator.pushNamed(context, '/profile');
+        //     }
+        //   },
+        // ),
       ),
     );
   }

@@ -198,12 +198,13 @@ class _HomeScreenState extends State<HomeScreen> {
           if (index == 1) {
             Navigator.pushNamed(context, '/course');
           } else if (index == 2) {
-            Navigator.pushNamed(context, '/blog');
-          } else if (index == 3) {
-            Navigator.pushNamed(context, '/ebook');
-          } else if (index == 4) {
             Navigator.pushNamed(context, '/profile');
           }
+          //  else if (index == 3) {
+          //   Navigator.pushNamed(context, '/ebook');
+          // } else if (index == 4) {
+          //   Navigator.pushNamed(context, '/profile');
+          // }
         },
       ), // 👈 Using your custom BottomNavBar
     );
