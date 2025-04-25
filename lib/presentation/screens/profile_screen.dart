@@ -6,6 +6,13 @@ import 'package:stock_careers/data/services/auth_service.dart';
 import 'package:stock_careers/presentation/widgets/bottom_nav_bar.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:stock_careers/utils/content/disclaimer.dart';
+import 'package:stock_careers/utils/content/privacy_policy.dart';
+import 'package:stock_careers/utils/content/refund_policy.dart';
+import 'package:stock_careers/utils/content/terms_and_conditions.dart';
+
+import '../../utils/content/about_us.dart';
+import '../StaticContent/static_content_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -104,11 +111,61 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     _buildRow("Edit Account", () {
                       Navigator.pushNamed(context, '/editProfile');
                     }),
-                    _buildRow("About Us", () {}),
-                    _buildRow("Disclaimer", () {}),
-                    _buildRow("Privacy Policy", () {}),
-                    _buildRow("Refund Policy", () {}),
-                    _buildRow("Terms & Conditions", () {}),
+                    _buildRow("About Us", () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => StaticContentScreen(
+                            title: "About Us",
+                            content: aboutUsContent,
+                          ),
+                        ),
+                      );
+                    }),
+                    _buildRow("Disclaimer", () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => StaticContentScreen(
+                            title: "Disclaimer",
+                            content: disclaimerContent,
+                          ),
+                        ),
+                      );
+                    }),
+                    _buildRow("Privacy Policy", () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => StaticContentScreen(
+                            title: "Privacy Policy",
+                            content: privacyPolicyContent,
+                          ),
+                        ),
+                      );
+                    }),
+                    _buildRow("Refund Policy", () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => StaticContentScreen(
+                            title: "Refund Policy",
+                            content: refundPolicyContent,
+                          ),
+                        ),
+                      );
+                    }),
+                    _buildRow("Terms & Conditions", () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => StaticContentScreen(
+                            title: "Terms & Conditions",
+                            content: termsAndConditionsContent,
+                          ),
+                        ),
+                      );
+                    }),
                     _buildRow("Logout", () async {
                       final authService = AuthService(Dio());
                       await authService.logout();
