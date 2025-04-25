@@ -125,6 +125,7 @@ class _InputFieldState extends State<InputField> {
                 style: TextStyle(
                   color: Colors.red,
                   fontSize: Dimensions.fontSmall,
+                  fontWeight: FontWeight.w200
                 ),
               ),
             ),

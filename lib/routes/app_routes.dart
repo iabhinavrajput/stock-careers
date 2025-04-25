@@ -11,6 +11,7 @@ import 'package:stock_careers/presentation/screens/ebook_screen.dart';
 import 'package:stock_careers/presentation/screens/home_screen.dart';
 import 'package:stock_careers/presentation/screens/login_screen.dart';
 import 'package:stock_careers/presentation/screens/onboarding.dart';
+import 'package:stock_careers/presentation/screens/profile/edit_profile.dart';
 import 'package:stock_careers/presentation/screens/profile_screen.dart';
 import 'package:stock_careers/presentation/screens/signup_screen.dart';
 import 'package:stock_careers/presentation/screens/splash_screen_wrapper.dart';
@@ -28,6 +29,7 @@ class AppRoutes {
   static const String blogDetail = '/blogDetail';
   static const String ebook = '/ebook';
   static const String ebookDetail = '/ebookDetail';
+  static const String editProfile = '/editProfile';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -78,7 +80,8 @@ class AppRoutes {
             body: Center(child: Text('No ebook ID provided')),
           ),
         );
-
+      case editProfile:
+        return MaterialPageRoute(builder: (_) => EditProfile());
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(

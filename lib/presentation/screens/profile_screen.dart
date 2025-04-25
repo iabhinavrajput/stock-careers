@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stock_careers/data/services/auth_service.dart';
 import 'package:stock_careers/presentation/widgets/bottom_nav_bar.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
@@ -42,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ? AppColors.background
           : Colors.white,
       appBar: AppBar(
-        toolbarHeight: 85,
+        toolbarHeight: 55,
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).brightness == Brightness.dark
             ? AppColors.background
@@ -75,9 +76,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text(
                     '${decodedToken?['username'] ?? 'N/A'}',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
-                  const SizedBox(height: 10),
+                  // const SizedBox(height: 5),
                   Text(
                     '${decodedToken?['email'] ?? 'N/A'}',
                     textAlign: TextAlign.center,
@@ -97,12 +98,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 10),
                 child: Column(
                   children: [
-                    _buildRow("Favourite Courses", () {}),
-                    _buildRow("Edit Account", () {}),
-                    _buildRow("Settings and Privacy", () {}),
+                    _buildRow("Edit Account", () {
+                      Navigator.pushNamed(context, '/editProfile');
+                    }),
+                    _buildRow("About Us", () {}),
+                    _buildRow("Disclaimer", () {}),
+                    _buildRow("Privacy Policy", () {}),
+                    _buildRow("Refund Policy", () {}),
+                    _buildRow("Terms & Conditions", () {}),
                     _buildRow("Logout", () async {
                       final authService = AuthService(Dio());
                       await authService.logout();
@@ -124,12 +130,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Navigator.pushNamed(context, '/home');
           } else if (index == 1) {
             Navigator.pushNamed(context, '/course');
-          } 
+          }
           // else if (index == 2) {
           //   Navigator.pushNamed(context, '/blog');
           // } else if (index == 3) {
           //   Navigator.pushNamed(context, '/ebook');
-          // } 
+          // }
         },
       ),
     );
@@ -141,10 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            color: AppColors.white,
-            fontSize: 16,
-          ),
+          style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500),
         ),
         IconButton(
           icon: const Icon(Icons.chevron_right, color: AppColors.textGrey),
