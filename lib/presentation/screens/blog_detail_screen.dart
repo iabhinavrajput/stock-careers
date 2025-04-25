@@ -182,15 +182,13 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                   ),
                                   const SizedBox(width: 10),
                                   IconButton(
-                                    onPressed: () {
-                                      ShareHelper.shareBlog(blog.blogName);
-                                    },
-                                    icon: Icon(Icons.share,
-                                        color: Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? AppColors.white
-                                            : Colors.black),
-                                  ),
+                                      icon: const Icon(Icons.share,
+                                          color: AppColors.white),
+                                      onPressed: () {
+                                        
+                                        // Handle share action
+                                      },
+                                    ),
                                 ],
                               ),
                               const SizedBox(height: 10),

@@ -1,0 +1,9 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.stock_careers",
+      "sha256_cert_fingerprints":
+      ["9E:CD:EE:B0:99:50:70:A1:02:B2:83:E8:01:50:2D:E1:AA:4F:8F:9D:B0:53:A8:50:09:F2:54:15:22:78:3B:9C"]
+    }
+  }]
