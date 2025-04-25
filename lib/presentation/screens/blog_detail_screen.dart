@@ -166,6 +166,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                       icon: const Icon(Icons.share,
                                           color: AppColors.white),
                                       onPressed: () {
+                                        
                                         // Handle share action
                                       },
                                     ),
