@@ -10,7 +10,7 @@ import 'package:stock_careers/utils/content/disclaimer.dart';
 import 'package:stock_careers/utils/content/privacy_policy.dart';
 import 'package:stock_careers/utils/content/refund_policy.dart';
 import 'package:stock_careers/utils/content/terms_and_conditions.dart';
-
+import '../../data/models/user_model.dart';
 import '../../utils/content/about_us.dart';
 import '../StaticContent/static_content_screen.dart';
 
@@ -23,7 +23,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String? token;
-  Map<String, dynamic>? decodedToken;
+  UserModel? user; // <-- model instead of raw map
 
   @override
   void initState() {
@@ -31,17 +31,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _getToken();
   }
 
-  Future<void> _getToken() async {
-    final storage = const FlutterSecureStorage();
-    final storedToken = await storage.read(key: 'access_token');
-    setState(() {
-      token = storedToken;
-      if (token != null) {
-        decodedToken = Jwt.parseJwt(token!);
-      }
-    });
-    print("Decoded Token in profile : $decodedToken");
-  }
+Future<void> _getToken() async {
+  final storage = const FlutterSecureStorage();
+  final storedToken = await storage.read(key: 'access_token');
+  setState(() {
+    token = storedToken;
+    if (token != null) {
+      final decodedToken = Jwt.parseJwt(token!);
+      // Map the decoded token to UserModel
+      user = UserModel.fromMap(decodedToken); // <-- Use UserModel's fromMap method
+    }
+  });
+  print("Decoded Token User model: $user");
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,20 +85,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Column(
                 children: [
                   Text(
-                    '${decodedToken?['username'] ?? 'N/A'}',
+                    user?.username ?? 'N/A',
                     style: Theme.of(context).textTheme.displayLarge,
                   ),
                   // const SizedBox(height: 5),
                   Text(
-                    '${decodedToken?['email'] ?? 'N/A'}',
+                    user?.email ?? 'N/A',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 10),
-                  if (decodedToken?['phone'] != null &&
-                      decodedToken!['phone'].isNotEmpty)
+                  if (user?.phone != null && user!.phone!.isNotEmpty)
                     Text(
-                      '${decodedToken!['phone']}',
+                      user!.phone!,
                       style: const TextStyle(
                         color: AppColors.white,
                         fontSize: 16,

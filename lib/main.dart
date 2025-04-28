@@ -11,6 +11,7 @@ import 'package:stock_careers/blocs/auth/forget_password/forgot_password_bloc.da
 import 'package:stock_careers/blocs/course/course_bloc.dart';
 import 'package:stock_careers/data/services/course_service.dart';
 import 'blocs/auth/auth_bloc.dart';
+import 'blocs/auth/user/user_bloc.dart';
 import 'data/services/auth_service.dart';
 import 'routes/app_routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,6 +45,8 @@ void main() async {
         BlocProvider(create: (context) => AuthBloc(AuthService(Dio()))),
         BlocProvider(create: (context) => ThemeCubit()),
         BlocProvider(create: (context) => CourseBloc(CourseService())),
+BlocProvider<UserBloc>(
+      create: (context) => UserBloc(),)
       ],
       child: MyApp(isLoggedIn: token != null),
     ));
