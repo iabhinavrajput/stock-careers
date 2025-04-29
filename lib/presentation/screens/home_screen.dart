@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final token = await storage.read(key: 'access_token');
     if (token != null) {
       final decodedToken = Jwt.parseJwt(token);
+      print('Decoded token actually is: $decodedToken');
       setState(() {
         username = decodedToken['username'] ?? 'Guest';
       });
@@ -175,13 +176,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: Dimensions.pagePadding,
                     ),
-                    
+
                     Container(
-                        alignment: Alignment.bottomLeft,
-                        child: Text('Recent Blogs',
-                           
-                            style: Theme.of(context).textTheme.displayLarge),
-                      ),
+                      alignment: Alignment.bottomLeft,
+                      child: Text('Recent Blogs',
+                          style: Theme.of(context).textTheme.displayLarge),
+                    ),
                     const SizedBox(height: 12),
                     const RecentBlogs(), // <<< add this widget
                     const SizedBox(height: 20),

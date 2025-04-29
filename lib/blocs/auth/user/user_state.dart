@@ -1,8 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stock_careers/data/models/user_model.dart'; // Only import user_model.dart
-import 'package:stock_careers/data/models/user_model.dart';
-
-// Then use UserModel from user_model.dar
+import 'package:stock_careers/data/models/user_model.dart'; // UserModel
 
 abstract class UserState {}
 
@@ -11,9 +8,15 @@ class UserInitial extends UserState {}
 class UserLoading extends UserState {}
 
 class UserLoaded extends UserState {
-  final UserModel user; // Use UserModel instead of User
+  final UserModel user;
 
   UserLoaded(this.user);
+}
+
+class UserUpdated extends UserState {
+  final String message;
+
+  UserUpdated(this.message);
 }
 
 class UserError extends UserState {

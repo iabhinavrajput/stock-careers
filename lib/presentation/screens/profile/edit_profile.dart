@@ -8,7 +8,9 @@ import 'package:stock_careers/presentation/widgets/input_field.dart';
 import 'package:stock_careers/utils/constants/dimensions.dart';
 
 import '../../../data/models/user_model.dart';
+import '../../../data/services/user_service.dart';
 import '../../../utils/constants/colors.dart';
+import '../home_screen.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({
@@ -128,7 +130,38 @@ class _EditProfileState extends State<EditProfile> {
             SizedBox(
               height: Dimensions.screenHeight * 0.05,
             ),
-            CustomButton(text: "Save", onPressed: () {})
+            CustomButton(
+              text: "Save",
+              onPressed: () async {
+                if (user != null) {
+                  final userService = UserService();
+
+                  final success = await userService.updateUserProfile(
+                    userId: user!.uid,
+                    firstName: firstNameController.text.trim(),
+                    lastName: lastNameController.text.trim(),
+                    email: emailController.text.trim(),
+                    mobileNo: mobileController.text.trim(),
+                  );
+
+                  if (success) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Profile updated successfully",),
+                      backgroundColor: Colors.green,
+                      ),
+                    );
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => HomeScreen()),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Failed to update profile")),
+                    );
+                  }
+                }
+              },
+            )
           ],
         ),
       ),

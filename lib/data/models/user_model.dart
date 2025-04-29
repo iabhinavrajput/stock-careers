@@ -1,4 +1,5 @@
 class UserModel {
+  final String uid;
   final String username;
   final String email;
   final String phone;
@@ -6,6 +7,7 @@ class UserModel {
   final String lastname;
 
   UserModel({
+    required this.uid,
     required this.username,
     required this.email,
     required this.phone,
@@ -17,11 +19,16 @@ class UserModel {
   factory UserModel.fromMap(Map<String, dynamic> map) {
     // Split the username into first and last name
     final nameParts = map['username']?.split(' ') ?? ['Unknown', 'Unknown'];
+    print("User id: ${map['uid']}");
 
     return UserModel(
-      username: map['username'] ?? 'Unknown', // Ensure these keys match the decoded token
+      uid: map['uid'],
+      username: map['username'] ??
+          'Unknown', // Ensure these keys match the decoded token
       firstname: nameParts[0], // First part as first name
-      lastname: nameParts.length > 1 ? nameParts[1] : 'Unknown', // Second part as last name
+      lastname: nameParts.length > 1
+          ? nameParts[1]
+          : 'Unknown', // Second part as last name
       email: map['email'] ?? 'Unknown',
       phone: map['mobile_no'] ?? 'Unknown', // Map mobile_no to phone
     );
