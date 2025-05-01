@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:stock_careers/blocs/blog/blog_detail_bloc.dart';
 import 'package:stock_careers/blocs/blog/blog_detail_event.dart';
@@ -39,6 +40,14 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String slugify(String title) {
+  return title
+      .toLowerCase()
+      .replaceAll(RegExp(r'[^\w\s-]'), '') // remove special chars
+      .replaceAll(RegExp(r'\s+'), '-')     // spaces to dashes
+      .replaceAll(RegExp(r'-+'), '-');     // collapse multiple dashes
+}
+
     final screenHeight = MediaQuery.of(context).size.height;
     final shimmerHeight = screenHeight *
         0.3; // Dynamically set shimmer height based on screen height
@@ -182,13 +191,15 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                   ),
                                   const SizedBox(width: 10),
                                   IconButton(
-                                      icon: const Icon(Icons.share,
-                                          color: AppColors.white),
-                                      onPressed: () {
-                                        
-                                        // Handle share action
-                                      },
-                                    ),
+                                    icon: const Icon(Icons.share,
+                                        color: AppColors.white),
+                                    onPressed: () {
+                                      final blogSlug = slugify(blog.blogName);
+                                      final url =
+                                          'https://stockcareers.com/blog-details/$blogSlug';
+                                      Share.share('Check out this blog: $url');
+                                    },
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 10),

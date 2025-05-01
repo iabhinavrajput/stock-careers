@@ -5,6 +5,11 @@
 import FlutterMacOS
 import Foundation
 
+<<<<<<< HEAD
+=======
+import app_links
+import device_info_plus
+>>>>>>> c28e9fa (working fine but changes in the routes pending)
 import firebase_core
 import firebase_messaging
 import flutter_secure_storage_macos

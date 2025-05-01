@@ -12,7 +12,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:taskAffinity=""
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -25,13 +25,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- Deep link intent -->
+            <!-- Deep link intent for custom scheme (yourapp://) -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="stockcareers.com" />
+                <data android:scheme="yourapp" android:host="open.my.app" />
             </intent-filter>
+
+            <!-- Deep link intent for https://stockcareers.com -->
+                <intent-filter android:label="Stock Careers">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="stockcareers.com"
+                    android:pathPrefix="/blog-details" />
+                </intent-filter>
 
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
