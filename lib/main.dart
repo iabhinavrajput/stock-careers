@@ -1,4 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:app_links/app_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,18 +43,60 @@ void main() async {
   });
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final bool isLoggedIn;
   const MyApp({super.key, required this.isLoggedIn});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final AppLinks _appLinks = AppLinks();
+
+  @override
+  void initState() {
+    super.initState();
+    _handleDeepLinks();
+  }
+
+  void _handleDeepLinks() async {
+    // Cold start (when the app is launched from a link)
+    final initialUri =
+        await _appLinks.getInitialAppLink(); // use getInitialAppLink() instead
+    if (initialUri != null) {
+      _handleUri(initialUri);
+    }
+
+    // Foreground / Deep links (when the app is in the background or running)
+    _appLinks.uriLinkStream.listen((uri) {
+      _handleUri(uri);
+    });
+  }
+
+  void _handleUri(Uri uri) {
+    if (uri.host == 'stockcareers.com' &&
+        uri.pathSegments.contains('blog-details')) {
+      final slug = uri.pathSegments.last;
+      // Navigate to the blog screen using your route name and pass the slug
+      Navigator.of(navigatorKey.currentContext!).pushNamed(
+        '/blog',
+        arguments: slug,
+      );
+    }
+  }
+
+  // Define a global key to access Navigator
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeMode>(
       builder: (context, themeMode) {
         return MaterialApp(
+          navigatorKey: navigatorKey, // << ADD THIS
           title: 'Stock Careers',
           debugShowCheckedModeBanner: false,
-
           theme: AppThemes.lightTheme.copyWith(
             textTheme:
                 GoogleFonts.poppinsTextTheme(AppThemes.lightTheme.textTheme),
@@ -62,18 +105,11 @@ class MyApp extends StatelessWidget {
             textTheme:
                 GoogleFonts.poppinsTextTheme(AppThemes.darkTheme.textTheme),
           ),
-
-          themeMode: themeMode, // controlled by ThemeCubit
-
-          initialRoute: isLoggedIn ? AppRoutes.home : AppRoutes.splash,
+          themeMode: themeMode,
+          initialRoute: widget.isLoggedIn ? AppRoutes.home : AppRoutes.splash,
           onGenerateRoute: AppRoutes.generateRoute,
-          // OR if you’re using a static map of routes:
-          // routes: AppRouteMap.routes,
         );
       },
     );
-
-    //   },
-    // );
   }
 }
