@@ -9,6 +9,7 @@ import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:html/parser.dart' as html_parser;
 
+import '../../utils/constants/share_helper.dart';
 import '../widgets/app_shimmer.dart';
 
 class BlogDetailScreen extends StatefulWidget {
@@ -181,14 +182,14 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                   ),
                                   const SizedBox(width: 10),
                                   IconButton(
+                                    onPressed: () {
+                                      ShareHelper.shareBlog(blog.blogName);
+                                    },
                                     icon: Icon(Icons.share,
                                         color: Theme.of(context).brightness ==
                                                 Brightness.dark
                                             ? AppColors.white
                                             : Colors.black),
-                                    onPressed: () {
-                                      // Handle share action
-                                    },
                                   ),
                                 ],
                               ),
