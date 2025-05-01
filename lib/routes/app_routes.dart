@@ -14,6 +14,7 @@ import 'package:stock_careers/presentation/screens/onboarding.dart';
 import 'package:stock_careers/presentation/screens/profile_screen.dart';
 import 'package:stock_careers/presentation/screens/signup_screen.dart';
 import 'package:stock_careers/presentation/screens/splash_screen_wrapper.dart';
+import 'package:stock_careers/utils/blogs_utils.dart';
 
 class AppRoutes {
   static const String signUp = '/signup';
@@ -80,11 +81,29 @@ class AppRoutes {
         );
 
       default:
-        return MaterialPageRoute(
-          builder: (_) => const Scaffold(
-            body: Center(child: Text('No route defined')),
-          ),
-        );
+  if (settings.name != null && settings.name!.startsWith('/blog-details/')) {
+    final slug = settings.name!.split('/').last;
+
+    return MaterialPageRoute(
+      builder: (_) => FutureBuilder<String?>(
+        future: fetchBlogIdFromSlug(slug),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(body: Center(child: CircularProgressIndicator()));
+          } else if (snapshot.hasData && snapshot.data != null) {
+            return BlogDetailScreen(blogId: snapshot.data!);
+          } else {
+            return const Scaffold(body: Center(child: Text('Blog not found')));
+          }
+        },
+      ),
+    );
+  }
+
+  return MaterialPageRoute(
+    builder: (_) => const Scaffold(body: Center(child: Text('No route defined'))),
+  );
+
     }
   }
 }

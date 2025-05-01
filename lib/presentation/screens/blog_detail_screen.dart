@@ -40,7 +40,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
     String slugify(String title) {
   return title
       .toLowerCase()
-      .replaceAll(RegExp(r'[^\w\s-]'), '') // remove special chars
+      // .replaceAll(RegExp(r'[^\w\s-]'), '') // remove special chars
       .replaceAll(RegExp(r'\s+'), '-')     // spaces to dashes
       .replaceAll(RegExp(r'-+'), '-');     // collapse multiple dashes
 }

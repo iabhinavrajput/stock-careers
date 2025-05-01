@@ -21,6 +21,8 @@ import 'package:stock_careers/routes/app_route_generator.dart';
 import 'package:stock_careers/utils/constants/app_theme.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>(); // Declare the navigator key globally
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -60,6 +62,14 @@ class _MyAppState extends State<MyApp> {
     _handleDeepLinks();
   }
 
+  String slugify(String text) {
+    return text
+        .toLowerCase()
+      // .replaceAll(RegExp(r'[^\w\s-]'), '') // remove special chars
+      .replaceAll(RegExp(r'\s+'), '-')     // spaces to dashes
+      .replaceAll(RegExp(r'-+'), '-');  
+  }
+
   void _handleDeepLinks() async {
     // Cold start (when the app is launched from a link)
     final initialUri =
@@ -80,21 +90,18 @@ class _MyAppState extends State<MyApp> {
       final slug = uri.pathSegments.last;
       // Navigate to the blog screen using your route name and pass the slug
       Navigator.of(navigatorKey.currentContext!).pushNamed(
-        '/blog',
+        '/blog-details/$slug',
         arguments: slug,
       );
     }
   }
-
-  // Define a global key to access Navigator
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeMode>(
       builder: (context, themeMode) {
         return MaterialApp(
-          navigatorKey: navigatorKey, // << ADD THIS
+          navigatorKey: navigatorKey, // Use the navigator key here
           title: 'Stock Careers',
           debugShowCheckedModeBanner: false,
           theme: AppThemes.lightTheme.copyWith(
