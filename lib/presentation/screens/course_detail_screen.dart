@@ -7,9 +7,8 @@ import 'package:stock_careers/data/services/course_service.dart';
 import 'package:stock_careers/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_html/flutter_html.dart'; // Import the flutter_html package
-import 'package:html/parser.dart' as html_parser;
-
-import '../widgets/app_shimmer.dart'; // Import the html parser package
+import 'package:html/parser.dart'
+    as html_parser; // Import the html parser package
 
 class CourseDetailScreen extends StatefulWidget {
   final String courseId;
@@ -178,7 +177,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                   Text(
                                     course.price.isEmpty
                                         ? 'Free'
-                                        : course.price,
+                                        : '\u{20B9}${course.price}',
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -203,18 +202,12 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                 style: {
                                   // Apply styles to HTML tags
                                   'body': Style(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? Colors.grey.shade300
-                                        : Colors.grey
-                                            .shade700, // Change body text color
+                                    color: AppColors
+                                        .white, // Change body text color
                                   ),
                                   'p': Style(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? Colors.grey.shade300
-                                        : Colors.grey
-                                            .shade700, // Paragraph text color
+                                    color:
+                                        AppColors.white, // Paragraph text color
                                     fontSize: FontSize(16),
                                   ),
                                   'h1': Style(
@@ -240,7 +233,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                   ),
                                 },
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 40),
 
                               Container(
                                 alignment: Alignment.bottomCenter,
@@ -266,13 +259,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                     ),
                                     const SizedBox(width: 10),
                                     IconButton(
-                                      icon: Icon(
-                                        Icons.share,
-                                        color: Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? Colors.white
-                                            : Colors.black,
-                                      ),
+                                      icon: const Icon(Icons.share,
+                                          color: AppColors.white),
                                       onPressed: () {
                                         // Handle share action
                                       },
