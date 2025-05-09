@@ -20,6 +20,9 @@ class CourseScreen extends StatefulWidget {
 }
 
 class _CourseScreenState extends State<CourseScreen> {
+
+  static const IconData currency_rupee_outlined = IconData(0xf05db, fontFamily: 'MaterialIcons');
+
   @override
   void initState() {
     super.initState();
